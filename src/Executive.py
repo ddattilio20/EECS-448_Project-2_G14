@@ -18,16 +18,17 @@ class Executive:
 		turnResult = [0, "A", 0]
 		numShipInput = [1, 2, 3, 4, 5, 6]
 		self.numShips = 0
+		
 		#Ask how many ships there will be
 		#This while loop prompts the user for the ship count and repromts until valid input is given.
 		while self.numShips not in numShipInput:
-			try:
-				self.numShips = int(input("How many ships would you like in your BattleShip game? (1-6): "))
-			except ValueError:
-				print("Invalid input. Please try again.")
-				continue
-			if self.numShips not in numShipInput:
-				print("Invalid input. Please try again.")
+				try:
+					self.numShips = int(input("How many ships would you like in your BattleShip game? (1-6): "))
+				except ValueError:
+					print("Invalid input. Please try again.")
+					continue
+				if self.numShips not in numShipInput:
+					print("Invalid input. Please try again.")
 
 		
 
