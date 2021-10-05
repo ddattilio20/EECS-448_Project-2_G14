@@ -1,5 +1,5 @@
 from gameBoard import gameBoard
-from AI import AI
+from AI import *
 import os
 clear = lambda: os.system('cls')
 
@@ -7,7 +7,7 @@ class Executive:
 	#Class Attributes
 	playerTurn = 0		# 0 if player one's turn, 1 if player two's turn
 	roundNum = 0		#Keeps track of what round the game is on. Extra, but could be used on transition screen and win screen
-	
+	AIopp = 'N'         #Tracks whether user wants to play against AI
 	#Constructor: Creates two gameBoard instances
 	def __init__(self):
 		self.boardOne = gameBoard()
@@ -22,7 +22,12 @@ class Executive:
 		
 		#Ask how many ships there will be
 		#This while loop prompts the user for the ship count and repromts until valid input is given.
-		while self.numShips not in numShipInput:
+		AIopp = input("Would you like to play against the AI? (Y or N): ")
+		if AIopp == 'Y':
+			aiDiff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H")
+			
+		else:
+			while self.numShips not in numShipInput:
 				try:
 					self.numShips = int(input("How many ships would you like in your BattleShip game? (1-6): "))
 				except ValueError:

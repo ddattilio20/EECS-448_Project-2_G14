@@ -1,6 +1,6 @@
 from random import random
-from gameBoard import gameBoard
-from Executive import Executive
+
+
 
 class AI:
     #Class Attributes
