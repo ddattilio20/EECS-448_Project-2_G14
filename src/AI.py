@@ -12,6 +12,7 @@ class AI:
 
     #prevShot is a variable for storing if the medium AI previously hit a shot or not
     prevShot = False
+    prevShotPos = None
     aiOpp = 'N'
 
 
@@ -42,6 +43,7 @@ class AI:
 
 
     #Shots previous are not taken into account
+    #still need to add previous shot detection
     def mediumFire(opponentBoard, prevShot):
         #Array of possible column inputs for firing at
         colArr = ['A','B','C','D','E','F','G','H','I','J']
@@ -49,10 +51,15 @@ class AI:
         colRand = random.randrange(0,9,1)
         colTarget = None
         rowTarget = None
+        #if the previous shot didn't hit, then shoot randomly
         if prevShot is False:    
             colTarget = colArr[colRand]
             rowTarget = random.randrange(1,9,1)
-
+            int_Col = ord(colTarget) - 64
+            hitOrMiss = opponentBoard.shotOn(rowTarget - 1, int_Col - 1)
+            results = [rowTarget, colTarget, hitOrMiss]
+            return(results)
+        
 
         return
         
