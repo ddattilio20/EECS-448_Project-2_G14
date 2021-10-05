@@ -9,8 +9,11 @@ class AI:
     aiDiff = None
     #Variable for tracking where the hard AI is at to know the next space to shoot at
     hardPlace = 0
+
     #prevShot is a variable for storing if the medium AI previously hit a shot or not
     prevShot = False
+    aiOpp = 'N'
+
 
     #Method for easy difficulty AI
     def easyAI(opponentBoard):

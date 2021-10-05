@@ -7,7 +7,7 @@ class Executive:
 	#Class Attributes
 	playerTurn = 0		# 0 if player one's turn, 1 if player two's turn
 	roundNum = 0		#Keeps track of what round the game is on. Extra, but could be used on transition screen and win screen
-	AIopp = 'N'         #Tracks whether user wants to play against AI
+	         #Tracks whether user wants to play against AI
 	#Constructor: Creates two gameBoard instances
 	def __init__(self):
 		self.boardOne = gameBoard()
@@ -20,21 +20,25 @@ class Executive:
 		numShipInput = [1, 2, 3, 4, 5, 6]
 		self.numShips = 0
 		
-		#Ask how many ships there will be
-		#This while loop prompts the user for the ship count and repromts until valid input is given.
-		AIopp = input("Would you like to play against the AI? (Y or N): ")
-		if AIopp == 'Y':
-			aiDiff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H")
+
+		AI.aiOpp = input("Would you like to play against the AI? (Y or N): ")
+		
+		if AI.aiOpp == 'Y':
+			AI.aiDiff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H")
 			
 		else:
-			while self.numShips not in numShipInput:
-				try:
-					self.numShips = int(input("How many ships would you like in your BattleShip game? (1-6): "))
-				except ValueError:
-					print("Invalid input. Please try again.")
-					continue
-				if self.numShips not in numShipInput:
-					print("Invalid input. Please try again.")
+			AIopp = 'N'
+
+		#Ask how many ships there will be
+		#This while loop prompts the user for the ship count and repromts until valid input is given.
+		while self.numShips not in numShipInput:
+			try:
+				self.numShips = int(input("How many ships would you like in your BattleShip game? (1-6): "))
+			except ValueError:
+				print("Invalid input. Please try again.")
+				continue
+			if self.numShips not in numShipInput:
+				print("Invalid input. Please try again.")
 
 		
 
@@ -171,20 +175,35 @@ class Executive:
 		playerBoard.printPlayerView()
 		print()
 
+		if AI.aiOpp == 'Y':
+			if AI.aiDiff == 'E':
+				#place holder so stuff doesnt error
+				print()
+
+			elif AI.aiDiff == 'M':
+				#place holder so stuff doesnt error
+				print()
+			
+			elif AI.aiDiff == 'H':
+				#place holder so stuff doesnt error
+				print()
+		
+		
+		else:
 		# Takes column and row input from user
 		#This while loop prompts the user for the column and row and repromts until valid input is given.
-		while column not in validCol:
-			column = input("Input target column (A-J): ")
-			if column not in validCol:
-				print("Invalid input. Please try again.")
-		while row not in validRow:
-			try:
-				row = int(input("Input target row (1-9): "))
-			except ValueError:
-				print("Invalid input. Please try again.")
-				continue
-			if row not in validRow:
-				print("Invalid input. Please try again.")
+			while column not in validCol:
+				column = input("Input target column (A-J): ")
+				if column not in validCol:
+					print("Invalid input. Please try again.")
+			while row not in validRow:
+				try:
+					row = int(input("Input target row (1-9): "))
+				except ValueError:
+					print("Invalid input. Please try again.")
+					continue
+				if row not in validRow:
+					print("Invalid input. Please try again.")
 
 		# Converts input, takes shot, and records results to output array
 		column = column.capitalize()
