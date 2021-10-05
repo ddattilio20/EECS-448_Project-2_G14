@@ -9,6 +9,8 @@ class AI:
     aiDiff = None
     #Variable for tracking where the hard AI is at to know the next space to shoot at
     hardPlace = 0
+    #prevShot is a variable for storing if the medium AI previously hit a shot or not
+    prevShot = False
 
     #Method for easy difficulty AI
     def easyAI(opponentBoard):
@@ -33,5 +35,21 @@ class AI:
 
 
 
-   # def hardAI(opponentBoard):
+   # def hardFire(opponentBoard):
+
+
+    #Shots previous are not taken into account
+    def mediumFire(opponentBoard, prevShot):
+        #Array of possible column inputs for firing at
+        colArr = ['A','B','C','D','E','F','G','H','I','J']
+        # Generates a random number between 0-9 to index the array
+        colRand = random.randrange(0,9,1)
+        colTarget = None
+        rowTarget = None
+        if prevShot is False:    
+            colTarget = colArr[colRand]
+            rowTarget = random.randrange(1,9,1)
+
+
+        return
         
