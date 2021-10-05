@@ -11,7 +11,7 @@ class AI:
     hardPlace = 0
 
     #Method for easy difficulty AI
-    def easyFire(opponentBoard):
+    def easyAI(opponentBoard):
         #Array of possible column inputs for firing at
         colArr = ['A','B','C','D','E','F','G','H','I','J']
         # Generates a random number between 0-9 to index the array
@@ -33,5 +33,5 @@ class AI:
 
 
 
-   # def hardFire(opponentBoard):
+   # def hardAI(opponentBoard):
         

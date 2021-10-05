@@ -1,4 +1,5 @@
 from gameBoard import gameBoard
+from AI import AI
 import os
 clear = lambda: os.system('cls')
 
