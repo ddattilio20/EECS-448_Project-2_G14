@@ -14,7 +14,10 @@ class AI:
     # includes parameters [whether "last shot" was a hit (bool)    ,  position of last shot    ,  Which direction we need to check , First shot that was a hit   ]
     # last shot isn't always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode.
     prevShotInfo = [False, None, "Left", None]
-aiOpp = False
+    
+    
+    
+    aiOpp = False
 
 
     #Method for easy difficulty AI
@@ -50,13 +53,16 @@ aiOpp = False
         #Array of possible column inputs for firing at
         colArr = ['A','B','C','D','E','F','G','H','I','J']
         # Generates a random number between 0-9 to index the array
-        colRand = random.randrange(0,9,1)
+        colRand = random.randint(0,9,1)
         colTarget = None
         rowTarget = None
+        int_Col = None
+        validRowAI = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        validColAI = [1,2,3,4,5,6,7,8,9,10]
         #if the previous shot didn't hit, then shoot randomly
         if prevShotInfo[0] is False:    
             colTarget = colArr[colRand]
-            rowTarget = random.randrange(1,9,1)
+            rowTarget = random.randint(1,9,1)
             int_Col = ord(colTarget) - 64
             hitOrMiss = opponentBoard.shotOn(rowTarget - 1, int_Col - 1)
             if  (hitOrMiss != 0):
@@ -67,8 +73,15 @@ aiOpp = False
             return(results)
         if prevShotInfo[0] is True:
             if prevShotInfo[2] is "Left":
-                return
-            if prevShotInfo[2] is "Up":
+                if (rowTarget-2) in validRowAI:
+                    hitOrMiss = opponentBoard.shotOn(rowTarget - 2, int_Col - 1)
+                    if  (hitOrMiss != 0):
+                        prevShotInfo[0] = True
+                      #  prevShotInfo[1] = (rowTarget-1,int_Col-1)
+                     #   prevShotInfo[3] = (rowTarget-1,int_Col-1)
+                
+                
+            if prevShotInfo[2] is "Up" and (int_Col-2) > -1:
                 return
             if prevShotInfo[2] is "Right":
                 return
@@ -78,3 +91,6 @@ aiOpp = False
             
         return
         
+
+
+        def inRange()
