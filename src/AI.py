@@ -1,5 +1,5 @@
 import random
-
+from gameBoard import *
 
 
 class AI:
@@ -14,33 +14,33 @@ class AI:
     # includes parameters [whether "last shot" was a hit (bool)    ,  position of last shot    ,  Which direction we need to check , First shot that was a hit   ]
     # last shot isn't always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode.
     prevShotInfo = [False, None, "Left", None]
-aiOpp = False
+    aiOpp = False
 
-
+    # return on coordinates
     #Method for easy difficulty AI
-    def easyAI(opponentBoard):
+    def easyAI():
         #Array of possible column inputs for firing at
         #colArr = ['A','B','C','D','E','F','G','H','I','J']
         # Generates a random number between 0-9 to index the array
-        colRand = random.randint(1,10)
+        colTarget = random.randint(0,9)
         # Creates column value for firing based on the array and random number
         #colTarget = colArr[colRand]
 
         #Creates row value for firing by generating random nmber from 1-9
-        rowTarget = random.randint(1,9)
+        rowTarget = random.randint(0,8)
 
        #int_Col = ord(colTarget) - 64
 
-        hitOrMiss = opponentBoard.shotOn(rowTarget - 1, colRand - 1)
-        results = [rowTarget, colRand, hitOrMiss]
-        return(results)
+        #hitOrMiss = opponentBoard.shotOn(rowTarget, colRand)
+       # results = [rowTarget, colRand, hitOrMiss]
+        return(colTarget, rowTarget)
 
         
 
 
 
 
-   # def hardFire(opponentBoard):
+
 
 
     #Shots previous are not taken into account
@@ -78,3 +78,10 @@ aiOpp = False
             
         return
         
+
+
+
+
+
+    def hardFire(opponentBoard):
+        print()
