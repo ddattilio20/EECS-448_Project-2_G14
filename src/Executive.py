@@ -21,14 +21,17 @@ class Executive:
 		self.numShips = 0
 		
 
-		AI.aiOpp = input("Would you like to play against the AI? (Y or N): ")
-		
-		if AI.aiOpp == 'Y':
-			AI.aiDiff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H")
-			
+		userInput = input("Would you like to play against the AI? (Y or N): ")
+		 
+		if userInput == 'Y':
+			AI.aiOpp = True
 		else:
-			AIopp = 'N'
-
+			AI.aiOpp = False
+		
+		if AI.aiOpp == True:
+			AI.aiDiff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): ")
+			
+		
 		#Ask how many ships there will be
 		#This while loop prompts the user for the ship count and repromts until valid input is given.
 		while self.numShips not in numShipInput:
@@ -175,20 +178,47 @@ class Executive:
 		playerBoard.printPlayerView()
 		print()
 
-		if AI.aiOpp == 'Y':
-			if AI.aiDiff == 'E':
-				#place holder so stuff doesnt error
-				print()
+		#Code for if there is an AI
+		if AI.aiOpp == True:
+			if not(self.playerTurn):
+				# Takes column and row input from user
+			#This while loop prompts the user for the column and row and repromts until valid input is given.
+				while column not in validCol:
+					column = input("Input target column (A-J): ")
+					if column not in validCol:
+						print("Invalid input. Please try again.")
+				while row not in validRow:
+					try:
+						row = int(input("Input target row (1-9): "))
+					except ValueError:
+						print("Invalid input. Please try again.")
+						continue
+					if row not in validRow:
+						print("Invalid input. Please try again.")
 
-			elif AI.aiDiff == 'M':
-				#place holder so stuff doesnt error
-				print()
+				# Converts input, takes shot, and records results to output array
+				column = column.capitalize()
+				int_Column = ord(column) - 64
+				hitOrMiss = opponentBoard.shotOn(row-1, int_Column-1)
+				results = [row, column, hitOrMiss]
+				return(results)
 			
-			elif AI.aiDiff == 'H':
-				#place holder so stuff doesnt error
-				print()
+			
+			else:
+				if AI.aiDiff == 'E':
+					AI.easyAI(self.boardOne)
+
+				elif AI.aiDiff == 'M':
+					#place holder so stuff doesnt error
+					print()
+			
+				elif AI.aiDiff == 'H':
+					#place holder so stuff doesnt error
+					print()
 		
-		
+	
+	
+		#Code for if no AI
 		else:
 		# Takes column and row input from user
 		#This while loop prompts the user for the column and row and repromts until valid input is given.
