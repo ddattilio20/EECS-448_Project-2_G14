@@ -64,13 +64,17 @@ aiOpp = False
                 prevShotInfo[1] = (rowTarget-1,int_Col-1)
                 prevShotInfo[3] = (rowTarget-1,int_Col-1)
             results = [rowTarget, colTarget, hitOrMiss]
-
             return(results)
         if prevShotInfo[0] is True:
-           
-
+            if prevShotInfo[2] is "Left":
                 return
-            return
+            if prevShotInfo[2] is "Up":
+                return
+            if prevShotInfo[2] is "Right":
+                return
+            if prevShotInfo[2] is "Down":
+                return
 
+            
         return
         
