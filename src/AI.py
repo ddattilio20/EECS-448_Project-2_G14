@@ -8,7 +8,8 @@ class AI:
     #User selected AI difficult (Easy, Medium, Hard)
     aiDiff = None
     #Variable for tracking where the hard AI is at to know the next space to shoot at
-    hardPlace = 0
+    rows = 9
+    columns = 10
 
     #prevShotInfo is a variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down)
     # includes parameters [whether "last shot" was a hit (bool)    ,  position of last shot    ,  Which direction we need to check , First shot that was a hit   ]
@@ -83,5 +84,15 @@ class AI:
 
 
 
-    def hardFire(opponentBoard):
-        print()
+    def hardAI(board):
+        for j in range(AI.rows):
+            for i in range(AI.columns):
+                print(i,j)
+                if board[i][j] != 0:
+                #if (board[i][j] == 1) or (board[i][j] == 2) or (board[i][j] == 3) or (board[i][j] == 4) or (board[i][j] == 5) or (board[i][j] == 6):
+                    return(j,i)  
+                else:
+                    return(0,0)
+                
+        #AI.colPlace = i
+       # AI.rowPlace = j

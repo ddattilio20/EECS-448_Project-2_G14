@@ -216,8 +216,12 @@ class Executive:
 					print()
 			
 				elif AI.aiDiff == 'H':
-					#place holder so stuff doesnt error
-					print()
+					print(type(opponentBoard.board))
+					print(opponentBoard.board)
+					columnTarget, rowTarget = AI.hardAI(opponentBoard.board)
+					hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
+					results = [row, column, hitOrMiss]
+					return(results)
 		
 	
 	
