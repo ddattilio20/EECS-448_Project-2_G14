@@ -180,7 +180,7 @@ class Executive:
 
 		#Code for if there is an AI
 		if AI.aiOpp == True:
-			if not(self.playerTurn):
+			if self.playerTurn == 0:
 				# Takes column and row input from user
 			#This while loop prompts the user for the column and row and repromts until valid input is given.
 				while column not in validCol:
@@ -204,17 +204,24 @@ class Executive:
 				return(results)
 			
 			
-			else:
+			elif self.playerTurn == 1:
 				if AI.aiDiff == 'E':
-					AI.easyAI(self.boardOne)
+					columnTarget, rowTarget = AI.easyAI()
+					hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
+					results = [row, column, hitOrMiss]
+					return(results)
 
 				elif AI.aiDiff == 'M':
 					#place holder so stuff doesnt error
 					print()
 			
 				elif AI.aiDiff == 'H':
-					#place holder so stuff doesnt error
-					print()
+					print(type(opponentBoard.board))
+					print(opponentBoard.board)
+					columnTarget, rowTarget = AI.hardAI(opponentBoard.board)
+					hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
+					results = [row, column, hitOrMiss]
+					return(results)
 		
 	
 	
