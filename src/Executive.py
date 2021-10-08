@@ -72,6 +72,7 @@ class Executive:
 			self.setUp(self.boardOne, self.numShips)
 			clear()
 			#call random shit placement on self.boardTwo
+			#ex: randShip(self.boardOne, self.numShips)
 
 		#Small transition between player 2 setup and first turn
 		clear()
