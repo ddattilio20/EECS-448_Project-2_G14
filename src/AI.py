@@ -36,7 +36,7 @@ class AI:
 
         
 
-    def randomPlace(shipNumber, boardVar):
+    def randomPlace( boardVar,shipNumber):
         i = 1
         randOrient = 0
         randRow = 0

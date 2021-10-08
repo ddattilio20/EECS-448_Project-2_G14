@@ -22,9 +22,9 @@ class Executive:
 
 		userInput = input("Would you like to play against the AI? (Y or N): ")
 		 
-		if userInput == 'Y':
+		if userInput == 'Y' or userInput == 'y':
 			AI.aiOpp = True
-		elif userInput == 'N':
+		elif userInput == 'N' or userInput == 'n':
 			AI.aiOpp = False
 		
 		if AI.aiOpp == True:
@@ -71,8 +71,8 @@ class Executive:
 			print()
 			self.setUp(self.boardOne, self.numShips)
 			clear()
-			#call random shit placement on self.boardTwo
-			#ex: randShip(self.boardOne, self.numShips)
+			#call random ship placement on self.boardTwo
+			AI.randomPlace(self.boardTwo, self.numShips)
 
 		#Small transition between player 2 setup and first turn
 		clear()
