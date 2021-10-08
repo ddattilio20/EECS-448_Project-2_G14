@@ -19,13 +19,12 @@ class Executive:
 		turnResult = [0, "A", 0]
 		numShipInput = [1, 2, 3, 4, 5, 6]
 		self.numShips = 0
-		
 
 		userInput = input("Would you like to play against the AI? (Y or N): ")
 		 
 		if userInput == 'Y':
 			AI.aiOpp = True
-		else:
+		elif userInput == 'N':
 			AI.aiOpp = False
 		
 		if AI.aiOpp == True:
@@ -43,23 +42,36 @@ class Executive:
 			if self.numShips not in numShipInput:
 				print("Invalid input. Please try again.")
 
+		#board setup for when not playing AI
+		if AI.aiOpp == False:
+			#Set up each player's board
+			clear()
+			print ("Setting up Player 1's Board")
+			print()
+			print("Legend:")
+			print("[X] = Hit, [*] = Miss, [1-6] = Ship, [~] = Open Waters")
+			print()
+			self.setUp(self.boardOne, self.numShips)
+			clear()
+			print ("Setting up Player 2's Board")
+			print()
+			print("Legend:")
+			print("[X] = Hit, [*] = Miss, [1-6] = Ship, [~] = Open Waters")
+			print()
+			self.setUp(self.boardTwo, self.numShips)
 		
-
-		#Set up each player's board
-		clear()
-		print ("Setting up Player 1's Board")
-		print()
-		print("Legend:")
-		print("[X] = Hit, [*] = Miss, [1-6] = Ship, [~] = Open Waters")
-		print()
-		self.setUp(self.boardOne, self.numShips)
-		clear()
-		print ("Setting up Player 2's Board")
-		print()
-		print("Legend:")
-		print("[X] = Hit, [*] = Miss, [1-6] = Ship, [~] = Open Waters")
-		print()
-		self.setUp(self.boardTwo, self.numShips)
+		#If using AI, has user setup player 1 board and random ship method sets up player 2 board
+		elif AI.aiOpp == True:
+			#Set up each player's board
+			clear()
+			print ("Setting up Player 1's Board")
+			print()
+			print("Legend:")
+			print("[X] = Hit, [*] = Miss, [1-6] = Ship, [~] = Open Waters")
+			print()
+			self.setUp(self.boardOne, self.numShips)
+			clear()
+			#call random shit placement on self.boardTwo
 
 		#Small transition between player 2 setup and first turn
 		clear()
@@ -213,11 +225,13 @@ class Executive:
 
 				elif AI.aiDiff == 'M':
 					#place holder so stuff doesnt error
-					print()
+					columnTarget, rowTarget = AI.mediumFire()
+					hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
+					results = [row, column, hitOrMiss]
+					return(results)
+
 			
 				elif AI.aiDiff == 'H':
-					print(type(opponentBoard.board))
-					print(opponentBoard.board)
 					columnTarget, rowTarget = AI.hardAI(opponentBoard.board)
 					hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
 					results = [row, column, hitOrMiss]
@@ -229,6 +243,7 @@ class Executive:
 		else:
 		# Takes column and row input from user
 		#This while loop prompts the user for the column and row and repromts until valid input is given.
+
 			while column not in validCol:
 				column = input("Input target column (A-J): ")
 				if column not in validCol:

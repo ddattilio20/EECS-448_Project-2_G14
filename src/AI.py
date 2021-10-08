@@ -7,37 +7,31 @@ class AI:
 
     #User selected AI difficult (Easy, Medium, Hard)
     aiDiff = None
-    #Variable for tracking where the hard AI is at to know the next space to shoot at
-    rows = 9
-    columns = 10
+    
+    #Bool variable for whether player is playing against AI
+    aiOpp = False
+   
+    #def __init__(self):
+	    #self.rows = 9
+	    #self.columns = 10
 
     #prevShotInfo is a variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down)
     # includes parameters [whether "last shot" was a hit (bool)    ,  position of last shot    ,  Which direction we need to check , First shot that was a hit   ]
     # last shot isn't always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode.
     prevShotInfo = [False, None, "Left", None]
     
-    
-    
-    aiOpp = False
 
 
     # return on coordinates
     #Method for easy difficulty AI
     def easyAI():
-        #Array of possible column inputs for firing at
-        #colArr = ['A','B','C','D','E','F','G','H','I','J']
-        # Generates a random number between 0-9 to index the array
+        # Generates a random number between 0-9 for the column coord
         colTarget = random.randint(0,9)
-        # Creates column value for firing based on the array and random number
-        #colTarget = colArr[colRand]
-
-        #Creates row value for firing by generating random nmber from 1-9
+       
+        #Generates a random int between 0-87 for the row coord
         rowTarget = random.randint(0,8)
-
-       #int_Col = ord(colTarget) - 64
-
-        #hitOrMiss = opponentBoard.shotOn(rowTarget, colRand)
-       # results = [rowTarget, colRand, hitOrMiss]
+       
+        # reutrns the coordinates
         return(colTarget, rowTarget)
 
         
@@ -99,14 +93,7 @@ class AI:
 
 
     def hardAI(board):
-        for j in range(AI.rows):
-            for i in range(AI.columns):
-                print(i,j)
-                if board[i][j] != 0:
-                #if (board[i][j] == 1) or (board[i][j] == 2) or (board[i][j] == 3) or (board[i][j] == 4) or (board[i][j] == 5) or (board[i][j] == 6):
+        for i in range(9):
+            for j in range(10):
+                if (board[i][j] == '1') or (board[i][j]== '2') or (board[i][j] == '3') or (board[i][j] == '4') or (board[i][j] == '5') or (board[i][j] == '6'):
                     return(j,i)  
-                else:
-                    return(0,0)
-                
-        #AI.colPlace = i
-       # AI.rowPlace = j
