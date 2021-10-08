@@ -193,6 +193,7 @@ class Executive:
 
 		#Code for if there is an AI
 		if AI.aiOpp == True:
+			#if its the user's turn
 			if self.playerTurn == 0:
 				# Takes column and row input from user
 			#This while loop prompts the user for the column and row and repromts until valid input is given.
@@ -216,7 +217,7 @@ class Executive:
 				results = [row, column, hitOrMiss]
 				return(results)
 			
-			#AI Gameplay functions
+			#AI Gameplay functions if its the AI's turn
 			elif self.playerTurn == 1:
 				if AI.aiDiff == 'E':
 					columnTarget, rowTarget = AI.easyAI()
