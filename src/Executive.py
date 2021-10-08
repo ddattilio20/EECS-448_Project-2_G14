@@ -215,7 +215,7 @@ class Executive:
 				results = [row, column, hitOrMiss]
 				return(results)
 			
-			
+			#AI Gameplay functions
 			elif self.playerTurn == 1:
 				if AI.aiDiff == 'E':
 					columnTarget, rowTarget = AI.easyAI()

@@ -11,9 +11,6 @@ class AI:
     #Bool variable for whether player is playing against AI
     aiOpp = False
    
-    #def __init__(self):
-	    #self.rows = 9
-	    #self.columns = 10
 
     #prevShotInfo is a variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down)
     # includes parameters [whether "last shot" was a hit (bool)    ,  position of last shot    ,  Which direction we need to check , First shot that was a hit   ]
@@ -22,8 +19,9 @@ class AI:
     
 
 
-    # return on coordinates
     #Method for easy difficulty AI
+    #randoms 2 ints for columns and rows
+    #returns those ints for calling shoot method in executive
     def easyAI():
         # Generates a random number between 0-9 for the column coord
         colTarget = random.randint(0,9)
@@ -91,7 +89,9 @@ class AI:
 
 
 
-
+    #Hard AI
+    #Loops through columns and rows and checks whether value at each 2d index is equal to a ship value (1,2,3,4,5,6)
+    #returns j and i as coordinates to call fire method in executive
     def hardAI(board):
         for i in range(9):
             for j in range(10):
