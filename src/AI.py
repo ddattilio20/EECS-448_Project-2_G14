@@ -36,23 +36,20 @@ class AI:
 
         
 
-    def randomPlace( boardVar,shipNumber):
+    def randomPlace(boardVar, shipNumber):
         i = 1
         randOrient = 0
         randRow = 0
         randCol = 0
-        falseCheck = False
+        falseCheck = True
         while i <= shipNumber:
-            randOrient =  random.randint(0,1)
-            randRow =  random.randint(0,8)
-            randCol =  random.randint(0,9)
-            falseCheck = boardVar.placeShip(i, randOrient, randRow, randCol)
-            while (falseCheck == False):
+            while (falseCheck == True):
                 randOrient =  random.randint(0,1)
                 randRow =  random.randint(0,8)
                 randCol =  random.randint(0,9)
                 falseCheck = boardVar.placeShip(i, randOrient, randRow, randCol)
             i = i+1
+            falseCheck = True
         return
 
 
