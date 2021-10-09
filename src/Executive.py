@@ -81,8 +81,11 @@ class Executive:
 
 		#Small transition between player 2 setup and first turn
 		clear()
-		self.boardTwo.printPlayerView()
-		input("Setup complete. Give control to player 1 and press enter to start game")
+		if AI.aiOpp:
+			self.boardTwo.printPlayerView()
+			input("Setup complete. Press enter to start game")
+		else:
+			input("Setup complete. Give control to player 1 and press enter to start game")
 
 		gameOver = False
 		while not(gameOver):
@@ -317,6 +320,8 @@ class Executive:
 				print("Press enter when ready for AI turn")
 			elif(not self.playerTurn):
 				print("Please give control to player 2. Player 2, press enter when ready")
+			elif(AI.aiOpp):
+				print("Player 1, press enter when ready for your turn")
 			else:
 				print("Please give control to player 1. Player 1, press enter when ready")
 		else:
