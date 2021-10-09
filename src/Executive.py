@@ -81,6 +81,7 @@ class Executive:
 
 		#Small transition between player 2 setup and first turn
 		clear()
+		self.boardTwo.printPlayerView()
 		input("Setup complete. Give control to player 1 and press enter to start game")
 
 		gameOver = False
@@ -226,25 +227,17 @@ class Executive:
 			elif self.playerTurn == 1:
 				if AI.aiDiff == 'E':
 					columnTarget, rowTarget = AI.easyAI()
-					hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
-					results = [row, column, hitOrMiss]
-					return(results)
-
 				elif AI.aiDiff == 'M':
 					#place holder so stuff doesnt error
 					columnTarget, rowTarget = AI.mediumFire()
-					hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
-					results = [row, column, hitOrMiss]
-					return(results)
-
-			
 				elif AI.aiDiff == 'H':
 					columnTarget, rowTarget = AI.hardAI(opponentBoard.board)
-					hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
-					results = [row, column, hitOrMiss]
-					return(results)
-		
-	
+					
+				hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
+				row = rowTarget+1
+				column = validCol[columnTarget]
+				results = [row, column, hitOrMiss]
+				return(results)	
 	
 		#Code for if no AI
 		else:
@@ -320,7 +313,9 @@ class Executive:
 
 		# Prompt user to continue
 		if not endGame:
-			if(not self.playerTurn):
+			if(AI.aiOpp and not self.playerTurn):
+				print("Press enter when ready for AI turn")
+			elif(not self.playerTurn):
 				print("Please give control to player 2. Player 2, press enter when ready")
 			else:
 				print("Please give control to player 1. Player 1, press enter when ready")
