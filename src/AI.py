@@ -3,40 +3,41 @@ from gameBoard import *
 
 
 class AI:
-    #Class Attributes
+    """This class handles all AI-related functionality."""
 
-    #User selected AI difficult (Easy, Medium, Hard)
     aiDiff = None
+    """User selected AI difficult (Easy, Medium, Hard)."""
     
-    #Bool variable for whether player is playing against AI
     aiOpp = False
+    """Bool variable for whether player is playing against AI."""
    
     #def __init__(self):
 	    #self.rows = 9
 	    #self.columns = 10
 
-    #prevShotInfo is a variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down)
-    # includes parameters [whether "last shot" was a hit (bool)    ,  position of last shot    ,  Which direction we need to check , First shot that was a hit   ]
-    # last shot isn't always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode.
-    prevShotInfo = [False, None, "Left", None]
     
-
-
-    # return on coordinates
-    #Method for easy difficulty AI
+    prevShotInfo = [False, None, "Left", None]
+    """
+    variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down).
+    Includes parameters [whether "last shot" was a hit (bool), position of last shot, Which direction we need to check, First shot that was a hit].
+    Last shot isn't always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode..
+    """
+    
     def easyAI():
+        """Method for easy difficulty AI. Returns random coordinates."""
         # Generates a random number between 0-9 for the column coord
         colTarget = random.randint(0,9)
        
         #Generates a random int between 0-87 for the row coord
         rowTarget = random.randint(0,8)
        
-        # reutrns the coordinates
+        # returns the coordinates
         return(colTarget, rowTarget)
 
         
 
     def randomPlace(boardVar, shipNumber):
+        """Method for placing ships. Takes in the board being placed on and the number of ships to place."""
         i = 1
         randOrient = 0
         randRow = 0
@@ -106,10 +107,12 @@ class AI:
 
 
 
-    #Hard AI
-    #Loops through columns and rows and checks whether value at each 2d index is equal to a ship value (1,2,3,4,5,6)
-    #returns j and i as coordinates to call fire method in executive
     def hardAI(board):
+        """
+        Hard AI method.
+        Loops through columns and rows and checks whether value at each 2d index is equal to a ship value (1,2,3,4,5,6).
+        Returns j and i as coordinates to call fire method in executive.
+        """
         for i in range(9):
             for j in range(10):
                 if (board[i][j] == '1') or (board[i][j]== '2') or (board[i][j] == '3') or (board[i][j] == '4') or (board[i][j] == '5') or (board[i][j] == '6'):

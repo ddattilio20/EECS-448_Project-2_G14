@@ -1,21 +1,27 @@
+"""This package handles the executive/game logic functionality."""
 from gameBoard import gameBoard
 from AI import *
 import os
 clear = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
+"""Clears terminal with appropriate OS call"""
 
 class Executive:
-	#Class Attributes
-	playerTurn = 0		# 0 if player one's turn, 1 if player two's turn
-	roundNum = 0		#Keeps track of what round the game is on. Extra, but could be used on transition screen and win screen
-	         #Tracks whether user wants to play against AI
-	#Constructor: Creates two gameBoard instances
+	"""This class handles the executive/game logic functionality. It is initiated from main"""
+
+	playerTurn = 0
+	"""Keeps track of which player's turn it is. 0 for player 1, 1 for player 2."""
+	roundNum = 0
+	"""Keeps track of what round the game is on. Extra, but could be used on transition screen and win screen"""
+	
 	def __init__(self):
+		"""Constructor, creates two gameBoard instances"""
 		self.boardOne = gameBoard()
 		self.boardTwo = gameBoard()
 
-	#Calls upon internal methods in order
 	def runGame(self):
-	#variable needed to transfer information from self.takeTurn to self.transition - andrew
+		"""Does setup for game and AI then runs the game logic in a loop until someone wins"""
+		
+		#variable needed to transfer information from self.takeTurn to self.transition - andrew
 		turnResult = [0, "A", 0]
 		numShipInput = [1, 2, 3, 4, 5, 6]
 		self.numShips = 0
@@ -117,8 +123,11 @@ class Executive:
 		self.winScreen()
 		
 
-	#Performs the board setup for one player's board. Ships do not have to be placed in order. Will not let players place ships in an invalid spot
 	def setUp(self, gameBoard, numShips):
+		"""
+		Performs the board setup for one player's board. Will not let players place ships in an invalid spot.
+		Takes in a game board and the maximum number of ships.
+		"""
 		ShipNames=["LifeBoat(size=1)", "Destroyer(size=2)", "Submarine(size=3)", "BattleShip(size=4)", "Carrier(size=5)", "Cruiser(size=6)"]
 		orientation = True
 		alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
@@ -174,9 +183,11 @@ class Executive:
 
 		input("Press enter to continue...")
 
-	#Shows player their view of both game boards, asks for a row and column, then performs a shot. 
-	# ?Returns an array containing [row of shot, column of shot, 0-6 miss/ship hit]?
 	def takeTurn(self, playerBoard, opponentBoard):
+		"""
+		Shows player their view of both game boards, asks for a row and column, then performs a shot. 
+		Returns an array containing [row of shot, column of shot, 0-6 miss/ship hit]
+		"""
 		# Initializing variables for input guards
 		validRow = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		validCol = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
@@ -267,9 +278,13 @@ class Executive:
 		results = [row, column, hitOrMiss]
 		return(results)
 
-	#Displays the result of the last shot (hit/miss, which ship was hit/sunk). If a ship was sunk, check if game has been won. If so, end loop and go to winscreen.
-	# If not, ask to give control to next player and wait for confirmation
+	
 	def transitionScreen(self, turnResults):
+		"""
+		Displays the result of the last shot (hit/miss, which ship was hit/sunk). If a ship was sunk, check if game has been won. If so, end loop and go to winscreen. If not, ask to give control to next player and wait for confirmation.
+		Takes in an array containing [row of shot, column of shot, 0-6 miss/ship hit].
+		Returns whether the game has been won.
+		"""
 		# Ship names, for easy output
 		ShipNames=["LifeBoat(size=1)", "Destroyer(size=2)", "Submarine(size=3)", "BattleShip(size=4)", "Carrier(size=5)", "Cruiser(size=6)"]
 
@@ -333,8 +348,8 @@ class Executive:
 		input()
 		return endGame
 
-	#Displays both boards and announces the winner
 	def winScreen(self):
+		"""Displays both boards and announces the winner"""
 		#Clear screen and display which player won and on what turn
 		clear()
 		round = str(self.roundNum)
