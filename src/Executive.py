@@ -1,7 +1,7 @@
 from gameBoard import gameBoard
 from AI import *
 import os
-clear = lambda: os.system('cls')
+clear = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
 
 class Executive:
 	#Class Attributes
