@@ -20,15 +20,20 @@ class Executive:
 		numShipInput = [1, 2, 3, 4, 5, 6]
 		self.numShips = 0
 
-		userInput = input("Would you like to play against the AI? (Y or N): ")
-		 
+		userInput = ''
+		while userInput != 'Y' and userInput != 'N':
+			userInput = input("Would you like to play against the AI? (Y or N): ")
+			userInput = userInput.upper()
+		
 		if userInput == 'Y' or userInput == 'y':
 			AI.aiOpp = True
 		elif userInput == 'N' or userInput == 'n':
 			AI.aiOpp = False
 		
 		if AI.aiOpp == True:
-			AI.aiDiff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): ")
+			while AI.aiDiff != 'E' and AI.aiDiff != 'M' and AI.aiDiff != 'H':
+				AI.aiDiff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): ")
+				AI.aiDiff = AI.aiDiff.upper()
 			
 		
 		#Ask how many ships there will be
