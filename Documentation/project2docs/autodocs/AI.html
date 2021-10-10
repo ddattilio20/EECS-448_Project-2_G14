@@ -90,7 +90,7 @@ AI    </h1>
 
 <span class="k">class</span> <span class="nc">AI</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;This class handles all AI-related functionality.&quot;&quot;&quot;</span>
-	
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
         <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
@@ -98,8 +98,9 @@ AI    </h1>
         <span class="sd">&quot;&quot;&quot;Stores hit ship coordinates to check nearby coordinates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
         <span class="sd">&quot;&quot;&quot;Stores current direction to check for nearby coordinates.&quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calls selected AI difficiulty method based on user input&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
@@ -111,14 +112,14 @@ AI    </h1>
         <span class="sd">&quot;&quot;&quot;Method for easy difficulty AI. Returns random coordinates.&quot;&quot;&quot;</span>
         <span class="c1"># Generates a random number between 0-9 for the column coord</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
-       
-        <span class="c1">#Generates a random int between 0-87 for the row coord</span>
+
+        <span class="c1"># Generates a random int between 0-87 for the row coord</span>
         <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-       
+
         <span class="c1"># returns the coordinates</span>
         <span class="k">return</span><span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
 
-        
+
 
     <span class="k">def</span> <span class="nf">randomPlace</span><span class="p">(</span><span class="n">boardVar</span><span class="p">,</span> <span class="n">shipNumber</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method for placing ships. Takes in the board being placed on and the number of ships to place.&quot;&quot;&quot;</span>
@@ -174,7 +175,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
-            
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
@@ -192,7 +193,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
-                    
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;U&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
@@ -207,7 +208,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
-                    
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
@@ -222,7 +223,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
-            
+
     <span class="k">def</span> <span class="nf">hardAI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hard AI method.</span>
@@ -232,7 +233,7 @@ AI    </h1>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;4&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;6&#39;</span><span class="p">):</span>
-                    <span class="k">return</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>  
+                    <span class="k">return</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -251,7 +252,7 @@ AI    </h1>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">AI</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;This class handles all AI-related functionality.&quot;&quot;&quot;</span>
-	
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
         <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
@@ -259,8 +260,9 @@ AI    </h1>
         <span class="sd">&quot;&quot;&quot;Stores hit ship coordinates to check nearby coordinates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
         <span class="sd">&quot;&quot;&quot;Stores current direction to check for nearby coordinates.&quot;&quot;&quot;</span>
-    
+
     <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calls selected AI difficiulty method based on user input&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
@@ -272,14 +274,14 @@ AI    </h1>
         <span class="sd">&quot;&quot;&quot;Method for easy difficulty AI. Returns random coordinates.&quot;&quot;&quot;</span>
         <span class="c1"># Generates a random number between 0-9 for the column coord</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
-       
-        <span class="c1">#Generates a random int between 0-87 for the row coord</span>
+
+        <span class="c1"># Generates a random int between 0-87 for the row coord</span>
         <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-       
+
         <span class="c1"># returns the coordinates</span>
         <span class="k">return</span><span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
 
-        
+
 
     <span class="k">def</span> <span class="nf">randomPlace</span><span class="p">(</span><span class="n">boardVar</span><span class="p">,</span> <span class="n">shipNumber</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method for placing ships. Takes in the board being placed on and the number of ships to place.&quot;&quot;&quot;</span>
@@ -335,7 +337,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
-            
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
@@ -353,7 +355,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
-                    
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;U&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
@@ -368,7 +370,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
-                    
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
@@ -383,7 +385,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
-            
+
     <span class="k">def</span> <span class="nf">hardAI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hard AI method.</span>
@@ -393,7 +395,7 @@ AI    </h1>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;4&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;6&#39;</span><span class="p">):</span>
-                    <span class="k">return</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>  
+                    <span class="k">return</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 
         </details>
@@ -469,6 +471,7 @@ AI    </h1>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calls selected AI difficiulty method based on user input&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
@@ -479,7 +482,9 @@ AI    </h1>
 
         </details>
 
-    
+            <div class="docstring"><p>Calls selected AI difficiulty method based on user input</p>
+</div>
+
 
                             </div>
                             <div id="AI.easyAI" class="classattr">
@@ -496,10 +501,10 @@ AI    </h1>
         <span class="sd">&quot;&quot;&quot;Method for easy difficulty AI. Returns random coordinates.&quot;&quot;&quot;</span>
         <span class="c1"># Generates a random number between 0-9 for the column coord</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
-       
-        <span class="c1">#Generates a random int between 0-87 for the row coord</span>
+
+        <span class="c1"># Generates a random int between 0-87 for the row coord</span>
         <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-       
+
         <span class="c1"># returns the coordinates</span>
         <span class="k">return</span><span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
 </pre></div>
@@ -591,7 +596,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
-            
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
@@ -609,7 +614,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
-                    
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;U&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
@@ -624,7 +629,7 @@ AI    </h1>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
-                    
+
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
                 <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
@@ -669,7 +674,7 @@ Returns coordinates for shot.</p>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span><span class="o">==</span> <span class="s1">&#39;2&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;3&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;4&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;6&#39;</span><span class="p">):</span>
-                    <span class="k">return</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>  
+                    <span class="k">return</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 
         </details>

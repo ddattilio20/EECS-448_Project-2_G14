@@ -2,7 +2,8 @@
 from gameBoard import gameBoard
 from AI import *
 import os
-clear = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear') """Clears terminal with appropriate OS call"""
+clear = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
+"""Clears terminal with appropriate OS call"""
 
 class Executive:
 	"""This class handles the executive/game logic functionality. It is initiated from main"""
