@@ -49,8 +49,8 @@ class AI:
         while i <= shipNumber:
             while (falseCheck == True):
                 randOrient =  random.randint(0,1)
-                randRow =  random.randint(0,8)
-                randCol =  random.randint(0,9)
+                randRow =  random.randint(1,9)
+                randCol =  random.randint(1,10)
                 falseCheck = boardVar.placeShip(i, randOrient, randRow, randCol)
             i = i+1
             falseCheck = True
