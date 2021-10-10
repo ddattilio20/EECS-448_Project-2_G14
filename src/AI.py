@@ -9,14 +9,9 @@ class AI:
         self.aiDiff = diff
         """User selected AI difficult (Easy, Medium, Hard)."""
         self.currHitShip = []
+        """Stores hit ship coordinates to check nearby coordinates."""
         self.currDir = "L"
-    
-    prevShotInfo = [False, None, "Left", None]
-    """
-    variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down).
-    Includes parameters [whether "last shot" was a hit (bool), position of last shot, Which direction we need to check, First shot that was a hit].
-    Last shot isn't always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode..
-    """
+        """Stores current direction to check for nearby coordinates."""
     
     def takeTurn(self, opponentBoard):
         if self.aiDiff == "E":

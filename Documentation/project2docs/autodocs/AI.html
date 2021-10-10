@@ -42,7 +42,10 @@
                                 <a class="variable" href="#AI.aiDiff">aiDiff</a>
                         </li>
                         <li>
-                                <a class="variable" href="#AI.prevShotInfo">prevShotInfo</a>
+                                <a class="variable" href="#AI.currHitShip">currHitShip</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#AI.currDir">currDir</a>
                         </li>
                         <li>
                                 <a class="function" href="#AI.takeTurn">takeTurn</a>
@@ -92,14 +95,9 @@ AI    </h1>
         <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
         <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="sd">&quot;&quot;&quot;Stores hit ship coordinates to check nearby coordinates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
-    
-    <span class="n">prevShotInfo</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Left&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down).</span>
-<span class="sd">    Includes parameters [whether &quot;last shot&quot; was a hit (bool), position of last shot, Which direction we need to check, First shot that was a hit].</span>
-<span class="sd">    Last shot isn&#39;t always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode..</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Stores current direction to check for nearby coordinates.&quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
@@ -132,8 +130,8 @@ AI    </h1>
         <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">shipNumber</span><span class="p">:</span>
             <span class="k">while</span> <span class="p">(</span><span class="n">falseCheck</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
                 <span class="n">randOrient</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">randRow</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-                <span class="n">randCol</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">randRow</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">randCol</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
                 <span class="n">falseCheck</span> <span class="o">=</span> <span class="n">boardVar</span><span class="o">.</span><span class="n">placeShip</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">randOrient</span><span class="p">,</span> <span class="n">randRow</span><span class="p">,</span> <span class="n">randCol</span><span class="p">)</span>
             <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
             <span class="n">falseCheck</span> <span class="o">=</span> <span class="kc">True</span>
@@ -258,14 +256,9 @@ AI    </h1>
         <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
         <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="sd">&quot;&quot;&quot;Stores hit ship coordinates to check nearby coordinates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
-    
-    <span class="n">prevShotInfo</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Left&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down).</span>
-<span class="sd">    Includes parameters [whether &quot;last shot&quot; was a hit (bool), position of last shot, Which direction we need to check, First shot that was a hit].</span>
-<span class="sd">    Last shot isn&#39;t always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode..</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Stores current direction to check for nearby coordinates.&quot;&quot;&quot;</span>
     
     <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
@@ -298,8 +291,8 @@ AI    </h1>
         <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">shipNumber</span><span class="p">:</span>
             <span class="k">while</span> <span class="p">(</span><span class="n">falseCheck</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
                 <span class="n">randOrient</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">randRow</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-                <span class="n">randCol</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">randRow</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">randCol</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
                 <span class="n">falseCheck</span> <span class="o">=</span> <span class="n">boardVar</span><span class="o">.</span><span class="n">placeShip</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">randOrient</span><span class="p">,</span> <span class="n">randRow</span><span class="p">,</span> <span class="n">randCol</span><span class="p">)</span>
             <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
             <span class="n">falseCheck</span> <span class="o">=</span> <span class="kc">True</span>
@@ -422,7 +415,9 @@ AI    </h1>
         <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
         <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="sd">&quot;&quot;&quot;Stores hit ship coordinates to check nearby coordinates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Stores current direction to check for nearby coordinates.&quot;&quot;&quot;</span>
 </pre></div>
 
         </details>
@@ -441,15 +436,24 @@ AI    </h1>
 
 
                             </div>
-                            <div id="AI.prevShotInfo" class="classattr">
-                                            <div class="attr variable"><a class="headerlink" href="#AI.prevShotInfo">#&nbsp;&nbsp</a>
+                            <div id="AI.currHitShip" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#AI.currHitShip">#&nbsp;&nbsp</a>
 
-        <span class="name">prevShotInfo</span><span class="default_value"> = [False, None, &#39;Left&#39;, None]</span>
+        <span class="name">currHitShip</span>
     </div>
 
-            <div class="docstring"><p>variable for storing if the medium AI previously hit a shot or not, the position of the previous shot if there is one, and where in recursion we are for tracking the shot (Left, Up, Right, or Down).
-Includes parameters [whether "last shot" was a hit (bool), position of last shot, Which direction we need to check, First shot that was a hit].
-Last shot isn't always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode..</p>
+            <div class="docstring"><p>Stores hit ship coordinates to check nearby coordinates.</p>
+</div>
+
+
+                            </div>
+                            <div id="AI.currDir" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#AI.currDir">#&nbsp;&nbsp</a>
+
+        <span class="name">currDir</span>
+    </div>
+
+            <div class="docstring"><p>Stores current direction to check for nearby coordinates.</p>
 </div>
 
 
@@ -527,8 +531,8 @@ Last shot isn't always the most recent shot, but rather whether or not the firin
         <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">shipNumber</span><span class="p">:</span>
             <span class="k">while</span> <span class="p">(</span><span class="n">falseCheck</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
                 <span class="n">randOrient</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">randRow</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-                <span class="n">randCol</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">randRow</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">randCol</span> <span class="o">=</span>  <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
                 <span class="n">falseCheck</span> <span class="o">=</span> <span class="n">boardVar</span><span class="o">.</span><span class="n">placeShip</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">randOrient</span><span class="p">,</span> <span class="n">randRow</span><span class="p">,</span> <span class="n">randCol</span><span class="p">)</span>
             <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
             <span class="n">falseCheck</span> <span class="o">=</span> <span class="kc">True</span>
