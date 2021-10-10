@@ -3,8 +3,9 @@ class gameBoard:
 
 	# Class Attributes
 	columns = 10
+	"""Number of columns, A-J"""
 	rows = 9
-
+	"""Number of rows, 1-9"""
 	# Constructor: Creates a 2D array of integers with all spots marked empty(0)
 	def __init__(self):
 		"""Constructor, initializes empty array"""
@@ -147,14 +148,12 @@ class gameBoard:
 		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.
 
 		Examples:    X:  X X     +:  X    Block:  XXX
-		                  O         XOX           XOX
+						  O         XOX           XOX
 					     X X         X            XXX
 
 		Note: X is a square revealed by the scan. O is the tile specified by row and col.
 		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.
 		"""
-
-		""" Need to show enemy ship positions """
 
 		# scan at middle
 		if(self.board[row][col] == "0"):

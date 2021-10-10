@@ -15,6 +15,7 @@ class Executive:
 	aiOpp = False
 	"""Bool variable for whether player is playing against AI."""
 	ai = None
+	"""Initializes selected AI difficulty"""
 
 	def __init__(self):
 		"""Constructor, creates two gameBoard instances"""
