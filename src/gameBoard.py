@@ -147,9 +147,10 @@ class gameBoard:
 		"""
 		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.
 
-		Examples:----X:--X-X-----+:--X----Block:--XXX
-		------------------O---------XOX-----------XOX
-		-----------------X-X---------X------------XXX
+		Examples:  
+		-------------X:--X-X-----+:--X----Block:--XXX  
+		------------------O---------XOX-----------XOX  
+		-----------------X-X---------X------------XXX  
 
 		Note: X is a square revealed by the scan. O is the tile specified by row and col.
 		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.
