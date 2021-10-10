@@ -4,17 +4,12 @@ from gameBoard import *
 
 class AI:
     """This class handles all AI-related functionality."""
-
-    aiDiff = None
-    """User selected AI difficult (Easy, Medium, Hard)."""
-    
-    aiOpp = False
-    """Bool variable for whether player is playing against AI."""
-   
-    #def __init__(self):
-	    #self.rows = 9
-	    #self.columns = 10
-
+	
+    def __init__(self, diff):
+        self.aiDiff = diff
+        """User selected AI difficult (Easy, Medium, Hard)."""
+        self.currHitShip = []
+        self.currDir = "L"
     
     prevShotInfo = [False, None, "Left", None]
     """
@@ -23,7 +18,15 @@ class AI:
     Last shot isn't always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode..
     """
     
-    def easyAI():
+    def takeTurn(self, opponentBoard):
+        if self.aiDiff == "E":
+            return self.easyAI()
+        elif self.aiDiff == "M":
+            return self.mediumAI(opponentBoard)
+        else:
+            return self.hardAI(opponentBoard)
+
+    def easyAI(self):
         """Method for easy difficulty AI. Returns random coordinates."""
         # Generates a random number between 0-9 for the column coord
         colTarget = random.randint(0,9)
@@ -55,59 +58,86 @@ class AI:
 
 
 
-
-
-    #Shots previous are not taken into account
-    #still need to add previous shot detection
-    #functionality is supposed to be semi smart (shoot straight once you get a 2 streak)
-    def mediumFire(opponentBoard, prevShotInfo):
-        #Array of possible column inputs for firing at
-        # Generates a random number between 0-9 to index the array
+    def mediumAI(self, opponentBoard):
         colTarget = None
         rowTarget = None
-        int_Col = None
-        validRowAI = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        validColAI = [1,2,3,4,5,6,7,8,9,10]
-        #if the previous shot didn't hit, then shoot randomly
-        if prevShotInfo[0] is False:    
+        validRowAI = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        validColAI = [0,1,2,3,4,5,6,7,8,9]
+        if not self.currHitShip:
             colTarget = random.randint(0,9)
             rowTarget = random.randint(0,8)
-            hitOrMiss = opponentBoard[rowTarget][colTarget]
-            if  (hitOrMiss != "0" and hitOrMiss != "X" and hitOrMiss != "*"):
-                prevShotInfo[0] = True
-                prevShotInfo[1] = (rowTarget,colTarget)
-                prevShotInfo[3] = (rowTarget,colTarget)
-            results = (rowTarget, colTarget)
+            while opponentBoard[rowTarget][colTarget] == "X" or opponentBoard[rowTarget][colTarget] == "*": # do not shoot on already shot positions
+                colTarget = random.randint(0,9)
+                rowTarget = random.randint(0,8)
+            if opponentBoard[rowTarget][colTarget] != "0":
+                self.currHitShip.append((colTarget, rowTarget))
+            results = (colTarget, rowTarget)
             return(results)
-        if prevShotInfo[0] is True:
-            rowTarget = prevShotInfo[1][0]
-            colTarget = prevShotInfo[1][1]
-            if prevShotInfo[2] == "Left":
-                if (rowTarget-1) in validRowAI:
-                    hitOrMiss = opponentBoard[rowTarget-1][colTarget]
-                    if  (hitOrMiss != "0" and hitOrMiss != "X" and hitOrMiss != "*"):
-                        prevShotInfo[0] = True
-                      #  prevShotInfo[1] = (rowTarget-1,int_Col-1)
-                    #   prevShotInfo[3] = (rowTarget-1,int_Col-1)
-                
-                
-            if prevShotInfo[2] == "Up" and (int_Col-2) > -1:
-                return
-            if prevShotInfo[2] == "Right":
-                return
-            if prevShotInfo[2] == "Down":
-                return
-
+        else:
+            if self.currDir == "L":
+                colTarget = self.currHitShip[-1][0]-1
+                rowTarget = self.currHitShip[-1][1]
+                if colTarget in validColAI and opponentBoard[rowTarget][colTarget] != "X" and opponentBoard[rowTarget][colTarget] != "*":
+                    if opponentBoard[rowTarget][colTarget] != "0":
+                        self.currHitShip.append((colTarget, rowTarget))
+                    else:
+                        self.currHitShip = [self.currHitShip[0]]
+                        self.currDir = "R"
+                    results = (colTarget, rowTarget)
+                    return(results) # early return is important to not continue checking directions
+                else:
+                    self.currHitShip = [self.currHitShip[0]]
+                    self.currDir = "R"
             
-        return
-        
-
-    def subMediumFire(opponentBoard, prevShotInfo, validRowAI, validColAI):
-        return
-
-
-
-    def hardAI(board):
+            if self.currDir == "R":
+                colTarget = self.currHitShip[-1][0]+1
+                rowTarget = self.currHitShip[-1][1]
+                if colTarget in validColAI and opponentBoard[rowTarget][colTarget] != "X" and opponentBoard[rowTarget][colTarget] != "*":
+                    if opponentBoard[rowTarget][colTarget] != "0":
+                        self.currHitShip.append((colTarget, rowTarget))
+                    elif len(self.currHitShip) == 1: # if we still only have one hit after checking left/right, we need to check up/down
+                        self.currHitShip = [self.currHitShip[0]]
+                        self.currDir = "U"
+                    else: # if we have gotten multiple hits moving to the right/left, we should not check up/down
+                        self.currHitShip = []
+                        self.currDir = "L"
+                    results = (colTarget, rowTarget)
+                    return(results) # early return is important to not continue checking directions
+                else:
+                    self.currHitShip = [self.currHitShip[0]]
+                    self.currDir = "U"
+                    
+            if self.currDir == "U":
+                colTarget = self.currHitShip[-1][0]
+                rowTarget = self.currHitShip[-1][1]-1
+                if rowTarget in validRowAI and opponentBoard[rowTarget][colTarget] != "X" and opponentBoard[rowTarget][colTarget] != "*":
+                    if opponentBoard[rowTarget][colTarget] != "0":
+                        self.currHitShip.append((colTarget, rowTarget))
+                    else:
+                        self.currHitShip = [self.currHitShip[0]]
+                        self.currDir = "D"
+                    results = (colTarget, rowTarget)
+                    return(results) # early return is important to not continue checking directions
+                else:
+                    self.currHitShip = [self.currHitShip[0]]
+                    self.currDir = "D"
+                    
+            if self.currDir == "D":
+                colTarget = self.currHitShip[-1][0]
+                rowTarget = self.currHitShip[-1][1]+1
+                if rowTarget in validRowAI and opponentBoard[rowTarget][colTarget] != "X" and opponentBoard[rowTarget][colTarget] != "*":
+                    if opponentBoard[rowTarget][colTarget] != "0":
+                        self.currHitShip.append((colTarget, rowTarget))
+                    else: # if we have checked left, right, up, and down and we still miss then we know we are done
+                        self.currHitShip = []
+                        self.currDir = "L"
+                    results = (colTarget, rowTarget)
+                    return(results)
+                else:
+                    self.currHitShip = []
+                    self.currDir = "L"
+            
+    def hardAI(self, board):
         """
         Hard AI method.
         Loops through columns and rows and checks whether value at each 2d index is equal to a ship value (1,2,3,4,5,6).

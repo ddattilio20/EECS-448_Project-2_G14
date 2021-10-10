@@ -12,6 +12,9 @@ class Executive:
 	"""Keeps track of which player's turn it is. 0 for player 1, 1 for player 2."""
 	roundNum = 0
 	"""Keeps track of what round the game is on. Extra, but could be used on transition screen and win screen"""
+	aiOpp = False
+	"""Bool variable for whether player is playing against AI."""
+	ai = None
 	
 	def __init__(self):
 		"""Constructor, creates two gameBoard instances"""
@@ -32,15 +35,16 @@ class Executive:
 			userInput = userInput.upper()
 		
 		if userInput == 'Y' or userInput == 'y':
-			AI.aiOpp = True
+			self.aiOpp = True
 		elif userInput == 'N' or userInput == 'n':
-			AI.aiOpp = False
+			self.aiOpp = False
 		
-		if AI.aiOpp == True:
-			while AI.aiDiff != 'E' and AI.aiDiff != 'M' and AI.aiDiff != 'H':
-				AI.aiDiff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): ")
-				AI.aiDiff = AI.aiDiff.upper()
-			
+		diff = ''
+		if self.aiOpp == True:
+			while diff != 'E' and diff != 'M' and diff != 'H':
+				diff = input("What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): ")
+				diff = diff.upper()
+			self.ai = AI(diff)
 		
 		#Ask how many ships there will be
 		#This while loop prompts the user for the ship count and repromts until valid input is given.
@@ -54,7 +58,7 @@ class Executive:
 				print("Invalid input. Please try again.")
 
 		#board setup for when not playing AI
-		if AI.aiOpp == False:
+		if self.aiOpp == False:
 			#Set up each player's board
 			clear()
 			print ("Setting up Player 1's Board")
@@ -72,7 +76,7 @@ class Executive:
 			self.setUp(self.boardTwo, self.numShips)
 		
 		#If using AI, has user setup player 1 board and random ship method sets up player 2 board
-		elif AI.aiOpp == True:
+		elif self.aiOpp == True:
 			#Set up each player's board
 			clear()
 			print ("Setting up Player 1's Board")
@@ -87,7 +91,7 @@ class Executive:
 
 		#Small transition between player 2 setup and first turn
 		clear()
-		if AI.aiOpp:
+		if self.aiOpp:
 			self.boardTwo.printPlayerView()
 			input("Setup complete. Press enter to start game")
 		else:
@@ -212,7 +216,7 @@ class Executive:
 		print()
 
 		#Code for if there is an AI
-		if AI.aiOpp == True:
+		if self.aiOpp == True:
 			#if its the user's turn
 			if self.playerTurn == 0:
 				# Takes column and row input from user
@@ -239,14 +243,7 @@ class Executive:
 			
 			#AI Gameplay functions if its the AI's turn
 			elif self.playerTurn == 1:
-				if AI.aiDiff == 'E':
-					columnTarget, rowTarget = AI.easyAI()
-				elif AI.aiDiff == 'M':
-					#place holder so stuff doesnt error
-					columnTarget, rowTarget = AI.mediumFire()
-				elif AI.aiDiff == 'H':
-					columnTarget, rowTarget = AI.hardAI(opponentBoard.board)
-					
+				columnTarget, rowTarget = self.ai.takeTurn(opponentBoard.board)	
 				hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
 				row = rowTarget+1
 				column = validCol[columnTarget]
@@ -331,11 +328,11 @@ class Executive:
 
 		# Prompt user to continue
 		if not endGame:
-			if(AI.aiOpp and not self.playerTurn):
+			if(self.aiOpp and not self.playerTurn):
 				print("Press enter when ready for AI turn")
 			elif(not self.playerTurn):
 				print("Please give control to player 2. Player 2, press enter when ready")
-			elif(AI.aiOpp):
+			elif(self.aiOpp):
 				print("Player 1, press enter when ready for your turn")
 			else:
 				print("Please give control to player 1. Player 1, press enter when ready")
