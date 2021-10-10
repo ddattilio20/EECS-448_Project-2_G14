@@ -7,7 +7,7 @@ class AI:
 
     def __init__(self, diff):
         self.aiDiff = diff
-        """User selected AI difficult (Easy, Medium, Hard)."""
+        """User selected AI difficulty (Easy, Medium, Hard)."""
         self.currHitShip = []
         """Stores hit ship coordinates to check nearby coordinates."""
         self.currDir = "L"
