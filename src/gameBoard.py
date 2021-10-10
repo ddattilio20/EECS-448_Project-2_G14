@@ -140,3 +140,84 @@ class gameBoard:
 				else:
 					print('~', " ", end = '')
 			print()
+
+	# Modifies a grid after a scan shot was declared
+	def scanShot(self, scanType, row, col):
+		"""
+		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.
+
+		Examples:    X:  X X     +:  X    Block:  XXX
+		                  O         XOX           XOX
+					     X X         X            XXX
+
+		Note: X is a square revealed by the scan. O is the tile specified by row and col.
+		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.
+		"""
+
+		#scan at middle
+		if(self.board[row][col] == "0"):
+			self.board[row][col] = '*'
+
+		#X scan
+		if scanType == 0:
+			if (row != 0):
+				if (col != 0):
+					if (self.board[row-1][col-1] == "0"):
+						self.board[row-1][col-1] = '*'
+			if (row != 9):
+				if (col != 0):
+					if (self.board[row+1][col-1] == "0"):
+						self.board[row+1][col-1] = '*'
+			if (row != 0):
+				if (col != 8):
+					if (self.board[row-1][col+1] == "0"):
+						self.board[row-1][col+1] = '*'
+			if (row != 9):
+				if (col != 8):
+					if (self.board[row+1][col+1] == "0"):
+						self.board[row+1][col+1] = '*'
+
+		#+ scan
+		elif scanType == 1:
+			if (col != 0):
+				if (self.board[row][col-1] == "0"):
+					self.board[row][col-1] = '*'
+			if (col != 8):
+				if (self.board[row][col+1] == "0"):
+					self.board[row][col+1] = '*'
+			if (row != 0):
+				if (self.board[row-1][col] == "0"):
+					self.board[row-1][col] = '*'
+			if (row != 9):
+				if (self.board[row+1][col] == "0"):
+					self.board[row+1][col] = '*'
+		#block scan
+		else:
+			if (row != 0):
+				if (col != 0):
+					if (self.board[row-1][col-1] == "0"):
+						self.board[row-1][col-1] = '*'
+			if (row != 9):
+				if (col != 0):
+					if (self.board[row+1][col-1] == "0"):
+						self.board[row+1][col-1] = '*'
+			if (row != 0):
+				if (col != 8):
+					if (self.board[row-1][col+1] == "0"):
+						self.board[row-1][col+1] = '*'
+			if (row != 9):
+				if (col != 8):
+					if (self.board[row+1][col+1] == "0"):
+						self.board[row+1][col+1] = '*'
+			if (col != 0):
+				if (self.board[row][col-1] == "0"):
+					self.board[row][col-1] = '*'
+			if (col != 8):
+				if (self.board[row][col+1] == "0"):
+					self.board[row][col+1] = '*'
+			if (row != 0):
+				if (self.board[row-1][col] == "0"):
+					self.board[row-1][col] = '*'
+			if (row != 9):
+				if (self.board[row+1][col] == "0"):
+					self.board[row+1][col] = '*'
