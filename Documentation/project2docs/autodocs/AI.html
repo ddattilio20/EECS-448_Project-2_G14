@@ -93,14 +93,14 @@ AI    </h1>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
-        <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;User selected AI difficulty (Easy, Medium, Hard).&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="sd">&quot;&quot;&quot;Stores hit ship coordinates to check nearby coordinates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
         <span class="sd">&quot;&quot;&quot;Stores current direction to check for nearby coordinates.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calls selected AI difficiulty method based on user input&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Calls selected AI difficulty method based on user input&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
@@ -255,14 +255,14 @@ AI    </h1>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
-        <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;User selected AI difficulty (Easy, Medium, Hard).&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="sd">&quot;&quot;&quot;Stores hit ship coordinates to check nearby coordinates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
         <span class="sd">&quot;&quot;&quot;Stores current direction to check for nearby coordinates.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calls selected AI difficiulty method based on user input&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Calls selected AI difficulty method based on user input&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
@@ -415,7 +415,7 @@ AI    </h1>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
-        <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;User selected AI difficulty (Easy, Medium, Hard).&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="sd">&quot;&quot;&quot;Stores hit ship coordinates to check nearby coordinates.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
@@ -433,7 +433,7 @@ AI    </h1>
         <span class="name">aiDiff</span>
     </div>
 
-            <div class="docstring"><p>User selected AI difficult (Easy, Medium, Hard).</p>
+            <div class="docstring"><p>User selected AI difficulty (Easy, Medium, Hard).</p>
 </div>
 
 
@@ -471,7 +471,7 @@ AI    </h1>
                 <details>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calls selected AI difficiulty method based on user input&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Calls selected AI difficulty method based on user input&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
@@ -482,7 +482,7 @@ AI    </h1>
 
         </details>
 
-            <div class="docstring"><p>Calls selected AI difficiulty method based on user input</p>
+            <div class="docstring"><p>Calls selected AI difficulty method based on user input</p>
 </div>
 
 
