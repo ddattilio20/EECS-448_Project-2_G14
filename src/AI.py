@@ -14,7 +14,7 @@ class AI:
         """Stores current direction to check for nearby coordinates."""
 
     def takeTurn(self, opponentBoard):
-        """Calls selected AI difficiulty method based on user input"""
+        """Calls selected AI difficulty method based on user input"""
         if self.aiDiff == "E":
             return self.easyAI()
         elif self.aiDiff == "M":
