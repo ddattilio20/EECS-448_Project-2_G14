@@ -1,0 +1,1 @@
+We estimated approximately 35 person-hours (~7 hours per person) to complete Project 2. We agreed this made sense compared to how long Project 1 took when considering the scope of Project 1 vs Project 2. Working with someone else's code base, we figured some time would need to be added despite the more limited scope.
