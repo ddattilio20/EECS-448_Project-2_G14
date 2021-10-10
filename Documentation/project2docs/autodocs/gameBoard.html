@@ -95,8 +95,9 @@ gameBoard    </h1>
 
 	<span class="c1"># Class Attributes</span>
 	<span class="n">columns</span> <span class="o">=</span> <span class="mi">10</span>
+	<span class="sd">&quot;&quot;&quot;Number of columns, A-J&quot;&quot;&quot;</span>
 	<span class="n">rows</span> <span class="o">=</span> <span class="mi">9</span>
-
+	<span class="sd">&quot;&quot;&quot;Number of rows, 1-9&quot;&quot;&quot;</span>
 	<span class="c1"># Constructor: Creates a 2D array of integers with all spots marked empty(0)</span>
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;Constructor, initializes empty array&quot;&quot;&quot;</span>
@@ -114,14 +115,14 @@ gameBoard    </h1>
 <span class="sd">		Takes in ship size, ship orientation (horizontal is 0, vertical is 1),	row index, column index.</span>
 <span class="sd">		Returns whether ship placement failed.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1">#this flag used to end while loop without breaking</span>
-		<span class="n">fail</span> <span class="o">=</span> <span class="kc">False</span>     <span class="c1">#this flag used to break the loop and return a negative result if the input would lead to invalid placement</span>
+		<span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># this flag used to end while loop without breaking</span>
+		<span class="n">fail</span> <span class="o">=</span> <span class="kc">False</span>     <span class="c1"># this flag used to break the loop and return a negative result if the input would lead to invalid placement</span>
 		<span class="k">while</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
-			<span class="c1">#vertical</span>
+			<span class="c1"># vertical</span>
 			<span class="k">if</span> <span class="n">orientation</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
-						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1">#dry run checking if there are any ships in the way of placement</span>
+						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1"># dry run checking if there are any ships in the way of placement</span>
 							<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 
 					<span class="k">if</span> <span class="n">fail</span><span class="p">:</span>
@@ -129,17 +130,17 @@ gameBoard    </h1>
 
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
 						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
-							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1">#placing ship</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># placing ship</span>
 							<span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 					<span class="k">break</span>
 
-			<span class="c1">#horizontal</span>
+			<span class="c1"># horizontal</span>
 			<span class="k">elif</span> <span class="ow">not</span> <span class="n">orientation</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">11</span><span class="p">:</span>
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
-						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1">#dry run checking if there are any ships in the way of placement</span>
+						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1"># dry run checking if there are any ships in the way of placement</span>
 							<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 
 					<span class="k">if</span> <span class="n">fail</span><span class="p">:</span>
@@ -147,7 +148,7 @@ gameBoard    </h1>
 
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
 						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
-							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1">#placing ship</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># placing ship</span>
 							<span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
@@ -238,20 +239,20 @@ gameBoard    </h1>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.</span>
 
-<span class="sd">		Examples:    X:  X X     +:  X    Block:  XXX</span>
-<span class="sd">		                  O         XOX           XOX</span>
-<span class="sd">					     X X         X            XXX</span>
+<span class="sd">		Examples:----X:--X-X-----+:--X----Block:--XXX</span>
+<span class="sd">		------------------O---------XOX-----------XOX</span>
+<span class="sd">		-----------------X-X---------X------------XXX</span>
 
 <span class="sd">		Note: X is a square revealed by the scan. O is the tile specified by row and col.</span>
 <span class="sd">		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 
-		<span class="c1">#scan at middle</span>
+		<span class="c1"># scan at middle</span>
 		<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
 
-		<span class="c1">#X scan</span>
-		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="c1"># X scan</span>
+		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
@@ -269,8 +270,8 @@ gameBoard    </h1>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
 
-		<span class="c1">#+ scan</span>
-		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="c1"># + scan</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
@@ -283,8 +284,8 @@ gameBoard    </h1>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
-		<span class="c1">#block scan</span>
-		<span class="k">else</span><span class="p">:</span>
+		<span class="c1"># square scan, scanType == 3</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
@@ -334,8 +335,9 @@ gameBoard    </h1>
 
 	<span class="c1"># Class Attributes</span>
 	<span class="n">columns</span> <span class="o">=</span> <span class="mi">10</span>
+	<span class="sd">&quot;&quot;&quot;Number of columns, A-J&quot;&quot;&quot;</span>
 	<span class="n">rows</span> <span class="o">=</span> <span class="mi">9</span>
-
+	<span class="sd">&quot;&quot;&quot;Number of rows, 1-9&quot;&quot;&quot;</span>
 	<span class="c1"># Constructor: Creates a 2D array of integers with all spots marked empty(0)</span>
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;Constructor, initializes empty array&quot;&quot;&quot;</span>
@@ -353,14 +355,14 @@ gameBoard    </h1>
 <span class="sd">		Takes in ship size, ship orientation (horizontal is 0, vertical is 1),	row index, column index.</span>
 <span class="sd">		Returns whether ship placement failed.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1">#this flag used to end while loop without breaking</span>
-		<span class="n">fail</span> <span class="o">=</span> <span class="kc">False</span>     <span class="c1">#this flag used to break the loop and return a negative result if the input would lead to invalid placement</span>
+		<span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># this flag used to end while loop without breaking</span>
+		<span class="n">fail</span> <span class="o">=</span> <span class="kc">False</span>     <span class="c1"># this flag used to break the loop and return a negative result if the input would lead to invalid placement</span>
 		<span class="k">while</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
-			<span class="c1">#vertical</span>
+			<span class="c1"># vertical</span>
 			<span class="k">if</span> <span class="n">orientation</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
-						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1">#dry run checking if there are any ships in the way of placement</span>
+						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1"># dry run checking if there are any ships in the way of placement</span>
 							<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 
 					<span class="k">if</span> <span class="n">fail</span><span class="p">:</span>
@@ -368,17 +370,17 @@ gameBoard    </h1>
 
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
 						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
-							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1">#placing ship</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># placing ship</span>
 							<span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 					<span class="k">break</span>
 
-			<span class="c1">#horizontal</span>
+			<span class="c1"># horizontal</span>
 			<span class="k">elif</span> <span class="ow">not</span> <span class="n">orientation</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">11</span><span class="p">:</span>
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
-						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1">#dry run checking if there are any ships in the way of placement</span>
+						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1"># dry run checking if there are any ships in the way of placement</span>
 							<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 
 					<span class="k">if</span> <span class="n">fail</span><span class="p">:</span>
@@ -386,7 +388,7 @@ gameBoard    </h1>
 
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
 						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
-							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1">#placing ship</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># placing ship</span>
 							<span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
@@ -477,20 +479,20 @@ gameBoard    </h1>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.</span>
 
-<span class="sd">		Examples:    X:  X X     +:  X    Block:  XXX</span>
-<span class="sd">		                  O         XOX           XOX</span>
-<span class="sd">					     X X         X            XXX</span>
+<span class="sd">		Examples:----X:--X-X-----+:--X----Block:--XXX</span>
+<span class="sd">		------------------O---------XOX-----------XOX</span>
+<span class="sd">		-----------------X-X---------X------------XXX</span>
 
 <span class="sd">		Note: X is a square revealed by the scan. O is the tile specified by row and col.</span>
 <span class="sd">		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 
-		<span class="c1">#scan at middle</span>
+		<span class="c1"># scan at middle</span>
 		<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
 
-		<span class="c1">#X scan</span>
-		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="c1"># X scan</span>
+		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
@@ -508,8 +510,8 @@ gameBoard    </h1>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
 
-		<span class="c1">#+ scan</span>
-		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="c1"># + scan</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
@@ -522,8 +524,8 @@ gameBoard    </h1>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
-		<span class="c1">#block scan</span>
-		<span class="k">else</span><span class="p">:</span>
+		<span class="c1"># square scan, scanType == 3</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
@@ -588,7 +590,9 @@ gameBoard    </h1>
         <span class="name">columns</span><span class="default_value"> = 10</span>
     </div>
 
-    
+            <div class="docstring"><p>Number of columns, A-J</p>
+</div>
+
 
                             </div>
                             <div id="gameBoard.rows" class="classattr">
@@ -597,7 +601,9 @@ gameBoard    </h1>
         <span class="name">rows</span><span class="default_value"> = 9</span>
     </div>
 
-    
+            <div class="docstring"><p>Number of rows, 1-9</p>
+</div>
+
 
                             </div>
                             <div id="gameBoard.getTile" class="classattr">
@@ -638,14 +644,14 @@ gameBoard    </h1>
 <span class="sd">		Takes in ship size, ship orientation (horizontal is 0, vertical is 1),	row index, column index.</span>
 <span class="sd">		Returns whether ship placement failed.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
-		<span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1">#this flag used to end while loop without breaking</span>
-		<span class="n">fail</span> <span class="o">=</span> <span class="kc">False</span>     <span class="c1">#this flag used to break the loop and return a negative result if the input would lead to invalid placement</span>
+		<span class="n">success</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># this flag used to end while loop without breaking</span>
+		<span class="n">fail</span> <span class="o">=</span> <span class="kc">False</span>     <span class="c1"># this flag used to break the loop and return a negative result if the input would lead to invalid placement</span>
 		<span class="k">while</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
-			<span class="c1">#vertical</span>
+			<span class="c1"># vertical</span>
 			<span class="k">if</span> <span class="n">orientation</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">:</span>
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
-						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1">#dry run checking if there are any ships in the way of placement</span>
+						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1"># dry run checking if there are any ships in the way of placement</span>
 							<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 
 					<span class="k">if</span> <span class="n">fail</span><span class="p">:</span>
@@ -653,17 +659,17 @@ gameBoard    </h1>
 
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">row</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
 						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
-							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1">#placing ship</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># placing ship</span>
 							<span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 					<span class="k">break</span>
 
-			<span class="c1">#horizontal</span>
+			<span class="c1"># horizontal</span>
 			<span class="k">elif</span> <span class="ow">not</span> <span class="n">orientation</span><span class="p">:</span>
 				<span class="k">if</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span> <span class="o">&lt;=</span> <span class="mi">11</span><span class="p">:</span>
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
-						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1">#dry run checking if there are any ships in the way of placement</span>
+						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span> <span class="c1"># dry run checking if there are any ships in the way of placement</span>
 							<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
 
 					<span class="k">if</span> <span class="n">fail</span><span class="p">:</span>
@@ -671,7 +677,7 @@ gameBoard    </h1>
 
 					<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">size</span><span class="p">):</span>
 						<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
-							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1">#placing ship</span>
+							<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>  <span class="c1"># placing ship</span>
 							<span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="n">fail</span> <span class="o">=</span> <span class="kc">True</span>
@@ -874,20 +880,20 @@ Returns whether there are any ships remaining on the board.</p>
 		<span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.</span>
 
-<span class="sd">		Examples:    X:  X X     +:  X    Block:  XXX</span>
-<span class="sd">		                  O         XOX           XOX</span>
-<span class="sd">					     X X         X            XXX</span>
+<span class="sd">		Examples:----X:--X-X-----+:--X----Block:--XXX</span>
+<span class="sd">		------------------O---------XOX-----------XOX</span>
+<span class="sd">		-----------------X-X---------X------------XXX</span>
 
 <span class="sd">		Note: X is a square revealed by the scan. O is the tile specified by row and col.</span>
 <span class="sd">		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.</span>
 <span class="sd">		&quot;&quot;&quot;</span>
 
-		<span class="c1">#scan at middle</span>
+		<span class="c1"># scan at middle</span>
 		<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
 
-		<span class="c1">#X scan</span>
-		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="c1"># X scan</span>
+		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
@@ -905,8 +911,8 @@ Returns whether there are any ships remaining on the board.</p>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
 
-		<span class="c1">#+ scan</span>
-		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="c1"># + scan</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
@@ -919,8 +925,8 @@ Returns whether there are any ships remaining on the board.</p>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
 					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
-		<span class="c1">#block scan</span>
-		<span class="k">else</span><span class="p">:</span>
+		<span class="c1"># square scan, scanType == 3</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
 			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
 					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
@@ -955,9 +961,9 @@ Returns whether there are any ships remaining on the board.</p>
 
             <div class="docstring"><p>ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.</p>
 
-<p>Examples:    X:  X X     +:  X    Block:  XXX
-                  O         XOX           XOX
-                             X X         X            XXX</p>
+<p>Examples:----X:--X-X-----+:--X----Block:--XXX
+------------------O---------XOX-----------XOX
+-----------------X-X---------X------------XXX</p>
 
 <p>Note: X is a square revealed by the scan. O is the tile specified by row and col.
 Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.</p>
