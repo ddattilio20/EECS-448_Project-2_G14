@@ -159,7 +159,7 @@ class gameBoard:
 			self.board[row][col] = '*'
 
 		#X scan
-		if scanType == 0:
+		if scanType == 1:
 			if (row != 0):
 				if (col != 0):
 					if (self.board[row-1][col-1] == "0"):
@@ -178,7 +178,7 @@ class gameBoard:
 						self.board[row+1][col+1] = '*'
 
 		#+ scan
-		elif scanType == 1:
+		elif scanType == 2:
 			if (col != 0):
 				if (self.board[row][col-1] == "0"):
 					self.board[row][col-1] = '*'
@@ -191,7 +191,7 @@ class gameBoard:
 			if (row != 9):
 				if (self.board[row+1][col] == "0"):
 					self.board[row+1][col] = '*'
-		#block scan
+		#block scan, scanType == 3
 		else:
 			if (row != 0):
 				if (col != 0):
