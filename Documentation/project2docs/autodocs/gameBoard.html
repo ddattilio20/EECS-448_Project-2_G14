@@ -65,6 +65,9 @@
                         <li>
                                 <a class="function" href="#gameBoard.printOpponentView">printOpponentView</a>
                         </li>
+                        <li>
+                                <a class="function" href="#gameBoard.scanShot">scanShot</a>
+                        </li>
                 </ul>
 
             </li>
@@ -229,6 +232,87 @@ gameBoard    </h1>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 			<span class="nb">print</span><span class="p">()</span>
+
+	<span class="c1"># Modifies a grid after a scan shot was declared</span>
+	<span class="k">def</span> <span class="nf">scanShot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scanType</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.</span>
+
+<span class="sd">		Examples:    X:  X X     +:  X    Block:  XXX</span>
+<span class="sd">		                  O         XOX           XOX</span>
+<span class="sd">					     X X         X            XXX</span>
+
+<span class="sd">		Note: X is a square revealed by the scan. O is the tile specified by row and col.</span>
+<span class="sd">		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="c1">#scan at middle</span>
+		<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+
+		<span class="c1">#X scan</span>
+		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+
+		<span class="c1">#+ scan</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+		<span class="c1">#block scan</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
 </pre></div>
 
         </details>
@@ -387,6 +471,87 @@ gameBoard    </h1>
 				<span class="k">else</span><span class="p">:</span>
 					<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 			<span class="nb">print</span><span class="p">()</span>
+
+	<span class="c1"># Modifies a grid after a scan shot was declared</span>
+	<span class="k">def</span> <span class="nf">scanShot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scanType</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.</span>
+
+<span class="sd">		Examples:    X:  X X     +:  X    Block:  XXX</span>
+<span class="sd">		                  O         XOX           XOX</span>
+<span class="sd">					     X X         X            XXX</span>
+
+<span class="sd">		Note: X is a square revealed by the scan. O is the tile specified by row and col.</span>
+<span class="sd">		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="c1">#scan at middle</span>
+		<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+
+		<span class="c1">#X scan</span>
+		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+
+		<span class="c1">#+ scan</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+		<span class="c1">#block scan</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
 </pre></div>
 
         </details>
@@ -691,6 +856,111 @@ Returns whether there are any ships remaining on the board.</p>
         </details>
 
             <div class="docstring"><p>Prints the opponent's view of the board (i.e. cannot see ships)</p>
+</div>
+
+
+                            </div>
+                            <div id="gameBoard.scanShot" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#gameBoard.scanShot">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">scanShot</span><span class="signature">(self, scanType, row, col)</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>	<span class="k">def</span> <span class="nf">scanShot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scanType</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.</span>
+
+<span class="sd">		Examples:    X:  X X     +:  X    Block:  XXX</span>
+<span class="sd">		                  O         XOX           XOX</span>
+<span class="sd">					     X X         X            XXX</span>
+
+<span class="sd">		Note: X is a square revealed by the scan. O is the tile specified by row and col.</span>
+<span class="sd">		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="c1">#scan at middle</span>
+		<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+
+		<span class="c1">#X scan</span>
+		<span class="k">if</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+
+		<span class="c1">#+ scan</span>
+		<span class="k">elif</span> <span class="n">scanType</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+		<span class="c1">#block scan</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+					<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+						<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+			<span class="k">if</span> <span class="p">(</span><span class="n">row</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">):</span>
+				<span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;0&quot;</span><span class="p">):</span>
+					<span class="bp">self</span><span class="o">.</span><span class="n">board</span><span class="p">[</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;*&#39;</span>
+</pre></div>
+
+        </details>
+
+            <div class="docstring"><p>ScanType is 0 for X shot, 1 for + shot and 2 for block shot. Row and Col correspond to the mid-point of each shot type.</p>
+
+<p>Examples:    X:  X X     +:  X    Block:  XXX
+                  O         XOX           XOX
+                             X X         X            XXX</p>
+
+<p>Note: X is a square revealed by the scan. O is the tile specified by row and col.
+Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.</p>
 </div>
 
 

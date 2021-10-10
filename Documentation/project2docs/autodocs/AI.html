@@ -42,10 +42,10 @@
                                 <a class="variable" href="#AI.aiDiff">aiDiff</a>
                         </li>
                         <li>
-                                <a class="variable" href="#AI.aiOpp">aiOpp</a>
+                                <a class="variable" href="#AI.prevShotInfo">prevShotInfo</a>
                         </li>
                         <li>
-                                <a class="variable" href="#AI.prevShotInfo">prevShotInfo</a>
+                                <a class="function" href="#AI.takeTurn">takeTurn</a>
                         </li>
                         <li>
                                 <a class="function" href="#AI.easyAI">easyAI</a>
@@ -54,10 +54,7 @@
                                 <a class="function" href="#AI.randomPlace">randomPlace</a>
                         </li>
                         <li>
-                                <a class="function" href="#AI.mediumFire">mediumFire</a>
-                        </li>
-                        <li>
-                                <a class="function" href="#AI.subMediumFire">subMediumFire</a>
+                                <a class="function" href="#AI.mediumAI">mediumAI</a>
                         </li>
                         <li>
                                 <a class="function" href="#AI.hardAI">hardAI</a>
@@ -90,17 +87,12 @@ AI    </h1>
 
 <span class="k">class</span> <span class="nc">AI</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;This class handles all AI-related functionality.&quot;&quot;&quot;</span>
-
-    <span class="n">aiDiff</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
-    
-    <span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="sd">&quot;&quot;&quot;Bool variable for whether player is playing against AI.&quot;&quot;&quot;</span>
-   
-    <span class="c1">#def __init__(self):</span>
-	    <span class="c1">#self.rows = 9</span>
-	    <span class="c1">#self.columns = 10</span>
-
+	
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
+        <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
     
     <span class="n">prevShotInfo</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Left&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -109,7 +101,15 @@ AI    </h1>
 <span class="sd">    Last shot isn&#39;t always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode..</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="nf">easyAI</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mediumAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hardAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">easyAI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method for easy difficulty AI. Returns random coordinates.&quot;&quot;&quot;</span>
         <span class="c1"># Generates a random number between 0-9 for the column coord</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
@@ -141,59 +141,91 @@ AI    </h1>
 
 
 
-
-
-    <span class="c1">#Shots previous are not taken into account</span>
-    <span class="c1">#still need to add previous shot detection</span>
-    <span class="c1">#functionality is supposed to be semi smart (shoot straight once you get a 2 streak)</span>
-    <span class="k">def</span> <span class="nf">mediumFire</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">,</span> <span class="n">prevShotInfo</span><span class="p">):</span>
-        <span class="c1">#Array of possible column inputs for firing at</span>
-        <span class="c1"># Generates a random number between 0-9 to index the array</span>
+    <span class="k">def</span> <span class="nf">mediumAI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for medium AI.</span>
+<span class="sd">        Goes through a basic algorithm when a shot is hit to check each direction for another ship coordinate, starting with left.</span>
+<span class="sd">        Returns coordinates for shot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">rowTarget</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">int_Col</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">validRowAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-        <span class="n">validColAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
-        <span class="c1">#if the previous shot didn&#39;t hit, then shoot randomly</span>
-        <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>    
+        <span class="n">validRowAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+        <span class="n">validColAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">:</span>
             <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
             <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-            <span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span>
-            <span class="k">if</span>  <span class="p">(</span><span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">):</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span><span class="n">colTarget</span><span class="p">)</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span><span class="n">colTarget</span><span class="p">)</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span> <span class="n">colTarget</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;X&quot;</span> <span class="ow">or</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="c1"># do not shoot on already shot positions</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
             <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">colTarget</span> <span class="o">=</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Left&quot;</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">rowTarget</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">validRowAI</span><span class="p">:</span>
-                    <span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span>
-                    <span class="k">if</span>  <span class="p">(</span><span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">):</span>
-                        <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                      <span class="c1">#  prevShotInfo[1] = (rowTarget-1,int_Col-1)</span>
-                    <span class="c1">#   prevShotInfo[3] = (rowTarget-1,int_Col-1)</span>
-                
-                
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Up&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">int_Col</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Right&quot;</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Down&quot;</span><span class="p">:</span>
-                <span class="k">return</span>
-
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">colTarget</span> <span class="ow">in</span> <span class="n">validColAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
             
-        <span class="k">return</span>
-        
-
-    <span class="k">def</span> <span class="nf">subMediumFire</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">,</span> <span class="n">prevShotInfo</span><span class="p">,</span> <span class="n">validRowAI</span><span class="p">,</span> <span class="n">validColAI</span><span class="p">):</span>
-        <span class="k">return</span>
-
-
-
-    <span class="k">def</span> <span class="nf">hardAI</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">colTarget</span> <span class="ow">in</span> <span class="n">validColAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># if we still only have one hit after checking left/right, we need to check up/down</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="c1"># if we have gotten multiple hits moving to the right/left, we should not check up/down</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
+                    
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;U&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">rowTarget</span> <span class="ow">in</span> <span class="n">validRowAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
+                    
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">rowTarget</span> <span class="ow">in</span> <span class="n">validRowAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="c1"># if we have checked left, right, up, and down and we still miss then we know we are done</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+            
+    <span class="k">def</span> <span class="nf">hardAI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hard AI method.</span>
 <span class="sd">        Loops through columns and rows and checks whether value at each 2d index is equal to a ship value (1,2,3,4,5,6).</span>
@@ -221,17 +253,12 @@ AI    </h1>
             <summary>View Source</summary>
             <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">AI</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;This class handles all AI-related functionality.&quot;&quot;&quot;</span>
-
-    <span class="n">aiDiff</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
-    
-    <span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="sd">&quot;&quot;&quot;Bool variable for whether player is playing against AI.&quot;&quot;&quot;</span>
-   
-    <span class="c1">#def __init__(self):</span>
-	    <span class="c1">#self.rows = 9</span>
-	    <span class="c1">#self.columns = 10</span>
-
+	
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
+        <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
     
     <span class="n">prevShotInfo</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Left&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -240,7 +267,15 @@ AI    </h1>
 <span class="sd">    Last shot isn&#39;t always the most recent shot, but rather whether or not the firing from adjacent squares portion of the code needs to run. you could miss a shot and still be in last shot hit mode..</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="k">def</span> <span class="nf">easyAI</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mediumAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hardAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">easyAI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method for easy difficulty AI. Returns random coordinates.&quot;&quot;&quot;</span>
         <span class="c1"># Generates a random number between 0-9 for the column coord</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
@@ -272,59 +307,91 @@ AI    </h1>
 
 
 
-
-
-    <span class="c1">#Shots previous are not taken into account</span>
-    <span class="c1">#still need to add previous shot detection</span>
-    <span class="c1">#functionality is supposed to be semi smart (shoot straight once you get a 2 streak)</span>
-    <span class="k">def</span> <span class="nf">mediumFire</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">,</span> <span class="n">prevShotInfo</span><span class="p">):</span>
-        <span class="c1">#Array of possible column inputs for firing at</span>
-        <span class="c1"># Generates a random number between 0-9 to index the array</span>
+    <span class="k">def</span> <span class="nf">mediumAI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for medium AI.</span>
+<span class="sd">        Goes through a basic algorithm when a shot is hit to check each direction for another ship coordinate, starting with left.</span>
+<span class="sd">        Returns coordinates for shot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">rowTarget</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">int_Col</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">validRowAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-        <span class="n">validColAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
-        <span class="c1">#if the previous shot didn&#39;t hit, then shoot randomly</span>
-        <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>    
+        <span class="n">validRowAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+        <span class="n">validColAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">:</span>
             <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
             <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-            <span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span>
-            <span class="k">if</span>  <span class="p">(</span><span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">):</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span><span class="n">colTarget</span><span class="p">)</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span><span class="n">colTarget</span><span class="p">)</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span> <span class="n">colTarget</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;X&quot;</span> <span class="ow">or</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="c1"># do not shoot on already shot positions</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
             <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">colTarget</span> <span class="o">=</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Left&quot;</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">rowTarget</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">validRowAI</span><span class="p">:</span>
-                    <span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span>
-                    <span class="k">if</span>  <span class="p">(</span><span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">):</span>
-                        <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                      <span class="c1">#  prevShotInfo[1] = (rowTarget-1,int_Col-1)</span>
-                    <span class="c1">#   prevShotInfo[3] = (rowTarget-1,int_Col-1)</span>
-                
-                
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Up&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">int_Col</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Right&quot;</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Down&quot;</span><span class="p">:</span>
-                <span class="k">return</span>
-
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">colTarget</span> <span class="ow">in</span> <span class="n">validColAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
             
-        <span class="k">return</span>
-        
-
-    <span class="k">def</span> <span class="nf">subMediumFire</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">,</span> <span class="n">prevShotInfo</span><span class="p">,</span> <span class="n">validRowAI</span><span class="p">,</span> <span class="n">validColAI</span><span class="p">):</span>
-        <span class="k">return</span>
-
-
-
-    <span class="k">def</span> <span class="nf">hardAI</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">colTarget</span> <span class="ow">in</span> <span class="n">validColAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># if we still only have one hit after checking left/right, we need to check up/down</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="c1"># if we have gotten multiple hits moving to the right/left, we should not check up/down</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
+                    
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;U&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">rowTarget</span> <span class="ow">in</span> <span class="n">validRowAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
+                    
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">rowTarget</span> <span class="ow">in</span> <span class="n">validRowAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="c1"># if we have checked left, right, up, and down and we still miss then we know we are done</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+            
+    <span class="k">def</span> <span class="nf">hardAI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hard AI method.</span>
 <span class="sd">        Loops through columns and rows and checks whether value at each 2d index is equal to a ship value (1,2,3,4,5,6).</span>
@@ -346,31 +413,30 @@ AI    </h1>
                                         <div class="attr function"><a class="headerlink" href="#AI.__init__">#&nbsp;&nbsp</a>
 
         
-            <span class="name">AI</span><span class="signature">()</span>
+            <span class="name">AI</span><span class="signature">(diff)</span>
     </div>
 
-        
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diff</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">diff</span>
+        <span class="sd">&quot;&quot;&quot;User selected AI difficult (Easy, Medium, Hard).&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+</pre></div>
+
+        </details>
+
     
 
                             </div>
                             <div id="AI.aiDiff" class="classattr">
                                             <div class="attr variable"><a class="headerlink" href="#AI.aiDiff">#&nbsp;&nbsp</a>
 
-        <span class="name">aiDiff</span><span class="default_value"> = None</span>
+        <span class="name">aiDiff</span>
     </div>
 
             <div class="docstring"><p>User selected AI difficult (Easy, Medium, Hard).</p>
-</div>
-
-
-                            </div>
-                            <div id="AI.aiOpp" class="classattr">
-                                            <div class="attr variable"><a class="headerlink" href="#AI.aiOpp">#&nbsp;&nbsp</a>
-
-        <span class="name">aiOpp</span><span class="default_value"> = False</span>
-    </div>
-
-            <div class="docstring"><p>Bool variable for whether player is playing against AI.</p>
 </div>
 
 
@@ -388,17 +454,41 @@ Last shot isn't always the most recent shot, but rather whether or not the firin
 
 
                             </div>
+                            <div id="AI.takeTurn" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#AI.takeTurn">#&nbsp;&nbsp</a>
+
+        
+            <span class="def">def</span>
+            <span class="name">takeTurn</span><span class="signature">(self, opponentBoard)</span>:
+    </div>
+
+                <details>
+            <summary>View Source</summary>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">takeTurn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;E&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s2">&quot;M&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mediumAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hardAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">)</span>
+</pre></div>
+
+        </details>
+
+    
+
+                            </div>
                             <div id="AI.easyAI" class="classattr">
                                         <div class="attr function"><a class="headerlink" href="#AI.easyAI">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
-            <span class="name">easyAI</span><span class="signature">()</span>:
+            <span class="name">easyAI</span><span class="signature">(self)</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">easyAI</span><span class="p">():</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">easyAI</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method for easy difficulty AI. Returns random coordinates.&quot;&quot;&quot;</span>
         <span class="c1"># Generates a random number between 0-9 for the column coord</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
@@ -452,80 +542,108 @@ Last shot isn't always the most recent shot, but rather whether or not the firin
 
 
                             </div>
-                            <div id="AI.mediumFire" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#AI.mediumFire">#&nbsp;&nbsp</a>
+                            <div id="AI.mediumAI" class="classattr">
+                                        <div class="attr function"><a class="headerlink" href="#AI.mediumAI">#&nbsp;&nbsp</a>
 
         
             <span class="def">def</span>
-            <span class="name">mediumFire</span><span class="signature">(opponentBoard, prevShotInfo)</span>:
+            <span class="name">mediumAI</span><span class="signature">(self, opponentBoard)</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">mediumFire</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">,</span> <span class="n">prevShotInfo</span><span class="p">):</span>
-        <span class="c1">#Array of possible column inputs for firing at</span>
-        <span class="c1"># Generates a random number between 0-9 to index the array</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">mediumAI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opponentBoard</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method for medium AI.</span>
+<span class="sd">        Goes through a basic algorithm when a shot is hit to check each direction for another ship coordinate, starting with left.</span>
+<span class="sd">        Returns coordinates for shot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">colTarget</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">rowTarget</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">int_Col</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">validRowAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
-        <span class="n">validColAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
-        <span class="c1">#if the previous shot didn&#39;t hit, then shoot randomly</span>
-        <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>    
+        <span class="n">validRowAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+        <span class="n">validColAI</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">:</span>
             <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
             <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
-            <span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span>
-            <span class="k">if</span>  <span class="p">(</span><span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">):</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span><span class="n">colTarget</span><span class="p">)</span>
-                <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span><span class="n">colTarget</span><span class="p">)</span>
-            <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span> <span class="n">colTarget</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;X&quot;</span> <span class="ow">or</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span> <span class="c1"># do not shoot on already shot positions</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
             <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">colTarget</span> <span class="o">=</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Left&quot;</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">rowTarget</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">validRowAI</span><span class="p">:</span>
-                    <span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span>
-                    <span class="k">if</span>  <span class="p">(</span><span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">hitOrMiss</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">):</span>
-                        <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-                      <span class="c1">#  prevShotInfo[1] = (rowTarget-1,int_Col-1)</span>
-                    <span class="c1">#   prevShotInfo[3] = (rowTarget-1,int_Col-1)</span>
-                
-                
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Up&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">int_Col</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Right&quot;</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="k">if</span> <span class="n">prevShotInfo</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Down&quot;</span><span class="p">:</span>
-                <span class="k">return</span>
-
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;L&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">colTarget</span> <span class="ow">in</span> <span class="n">validColAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;R&quot;</span>
             
-        <span class="k">return</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;R&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">colTarget</span> <span class="ow">in</span> <span class="n">validColAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># if we still only have one hit after checking left/right, we need to check up/down</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="c1"># if we have gotten multiple hits moving to the right/left, we should not check up/down</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
+                    
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;U&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">rowTarget</span> <span class="ow">in</span> <span class="n">validRowAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="c1"># early return is important to not continue checking directions</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;D&quot;</span>
+                    
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">==</span> <span class="s2">&quot;D&quot;</span><span class="p">:</span>
+                <span class="n">colTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+                <span class="k">if</span> <span class="n">rowTarget</span> <span class="ow">in</span> <span class="n">validRowAI</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;X&quot;</span> <span class="ow">and</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;*&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">opponentBoard</span><span class="p">[</span><span class="n">rowTarget</span><span class="p">][</span><span class="n">colTarget</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;0&quot;</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="c1"># if we have checked left, right, up, and down and we still miss then we know we are done</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">colTarget</span><span class="p">,</span> <span class="n">rowTarget</span><span class="p">)</span>
+                    <span class="k">return</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currHitShip</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">currDir</span> <span class="o">=</span> <span class="s2">&quot;L&quot;</span>
 </pre></div>
 
         </details>
 
-    
+            <div class="docstring"><p>Method for medium AI.
+Goes through a basic algorithm when a shot is hit to check each direction for another ship coordinate, starting with left.
+Returns coordinates for shot.</p>
+</div>
 
-                            </div>
-                            <div id="AI.subMediumFire" class="classattr">
-                                        <div class="attr function"><a class="headerlink" href="#AI.subMediumFire">#&nbsp;&nbsp</a>
-
-        
-            <span class="def">def</span>
-            <span class="name">subMediumFire</span><span class="signature">(opponentBoard, prevShotInfo, validRowAI, validColAI)</span>:
-    </div>
-
-                <details>
-            <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">subMediumFire</span><span class="p">(</span><span class="n">opponentBoard</span><span class="p">,</span> <span class="n">prevShotInfo</span><span class="p">,</span> <span class="n">validRowAI</span><span class="p">,</span> <span class="n">validColAI</span><span class="p">):</span>
-        <span class="k">return</span>
-</pre></div>
-
-        </details>
-
-    
 
                             </div>
                             <div id="AI.hardAI" class="classattr">
@@ -533,12 +651,12 @@ Last shot isn't always the most recent shot, but rather whether or not the firin
 
         
             <span class="def">def</span>
-            <span class="name">hardAI</span><span class="signature">(board)</span>:
+            <span class="name">hardAI</span><span class="signature">(self, board)</span>:
     </div>
 
                 <details>
             <summary>View Source</summary>
-            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">hardAI</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+            <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">hardAI</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">board</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hard AI method.</span>
 <span class="sd">        Loops through columns and rows and checks whether value at each 2d index is equal to a ship value (1,2,3,4,5,6).</span>

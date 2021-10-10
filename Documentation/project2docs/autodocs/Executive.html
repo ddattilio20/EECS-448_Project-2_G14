@@ -48,6 +48,12 @@
                                 <a class="variable" href="#Executive.roundNum">roundNum</a>
                         </li>
                         <li>
+                                <a class="variable" href="#Executive.aiOpp">aiOpp</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#Executive.ai">ai</a>
+                        </li>
+                        <li>
                                 <a class="function" href="#Executive.runGame">runGame</a>
                         </li>
                         <li>
@@ -100,6 +106,9 @@ Executive    </h1>
 	<span class="sd">&quot;&quot;&quot;Keeps track of which player&#39;s turn it is. 0 for player 1, 1 for player 2.&quot;&quot;&quot;</span>
 	<span class="n">roundNum</span> <span class="o">=</span> <span class="mi">0</span>
 	<span class="sd">&quot;&quot;&quot;Keeps track of what round the game is on. Extra, but could be used on transition screen and win screen&quot;&quot;&quot;</span>
+	<span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
+	<span class="sd">&quot;&quot;&quot;Bool variable for whether player is playing against AI.&quot;&quot;&quot;</span>
+	<span class="n">ai</span> <span class="o">=</span> <span class="kc">None</span>
 	
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;Constructor, creates two gameBoard instances&quot;&quot;&quot;</span>
@@ -120,15 +129,16 @@ Executive    </h1>
 			<span class="n">userInput</span> <span class="o">=</span> <span class="n">userInput</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 		
 		<span class="k">if</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span> <span class="ow">or</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span>
-			<span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">True</span>
 		<span class="k">elif</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span> <span class="ow">or</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span>
-			<span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
 		
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-			<span class="k">while</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;E&#39;</span> <span class="ow">and</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;M&#39;</span> <span class="ow">and</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
-				<span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): &quot;</span><span class="p">)</span>
-				<span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-			
+		<span class="n">diff</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+			<span class="k">while</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;E&#39;</span> <span class="ow">and</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;M&#39;</span> <span class="ow">and</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
+				<span class="n">diff</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): &quot;</span><span class="p">)</span>
+				<span class="n">diff</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">ai</span> <span class="o">=</span> <span class="n">AI</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
 		
 		<span class="c1">#Ask how many ships there will be</span>
 		<span class="c1">#This while loop prompts the user for the ship count and repromts until valid input is given.</span>
@@ -142,7 +152,7 @@ Executive    </h1>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid input. Please try again.&quot;</span><span class="p">)</span>
 
 		<span class="c1">#board setup for when not playing AI</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
 			<span class="c1">#Set up each player&#39;s board</span>
 			<span class="n">clear</span><span class="p">()</span>
 			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Setting up Player 1&#39;s Board&quot;</span><span class="p">)</span>
@@ -160,7 +170,7 @@ Executive    </h1>
 			<span class="bp">self</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">boardTwo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numShips</span><span class="p">)</span>
 		
 		<span class="c1">#If using AI, has user setup player 1 board and random ship method sets up player 2 board</span>
-		<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
 			<span class="c1">#Set up each player&#39;s board</span>
 			<span class="n">clear</span><span class="p">()</span>
 			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Setting up Player 1&#39;s Board&quot;</span><span class="p">)</span>
@@ -175,7 +185,7 @@ Executive    </h1>
 
 		<span class="c1">#Small transition between player 2 setup and first turn</span>
 		<span class="n">clear</span><span class="p">()</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">boardTwo</span><span class="o">.</span><span class="n">printPlayerView</span><span class="p">()</span>
 			<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Setup complete. Press enter to start game&quot;</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
@@ -300,7 +310,7 @@ Executive    </h1>
 		<span class="nb">print</span><span class="p">()</span>
 
 		<span class="c1">#Code for if there is an AI</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
 			<span class="c1">#if its the user&#39;s turn</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 				<span class="c1"># Takes column and row input from user</span>
@@ -327,14 +337,7 @@ Executive    </h1>
 			
 			<span class="c1">#AI Gameplay functions if its the AI&#39;s turn</span>
 			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-				<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
-				<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
-					<span class="c1">#place holder so stuff doesnt error</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">mediumFire</span><span class="p">()</span>
-				<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">hardAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
-					
+				<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ai</span><span class="o">.</span><span class="n">takeTurn</span><span class="p">(</span><span class="n">opponentBoard</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>	
 				<span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="o">.</span><span class="n">shotOn</span><span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span> <span class="n">columnTarget</span><span class="p">)</span>
 				<span class="n">row</span> <span class="o">=</span> <span class="n">rowTarget</span><span class="o">+</span><span class="mi">1</span>
 				<span class="n">column</span> <span class="o">=</span> <span class="n">validCol</span><span class="p">[</span><span class="n">columnTarget</span><span class="p">]</span>
@@ -419,11 +422,11 @@ Executive    </h1>
 
 		<span class="c1"># Prompt user to continue</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="n">endGame</span><span class="p">:</span>
-			<span class="k">if</span><span class="p">(</span><span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
+			<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Press enter when ready for AI turn&quot;</span><span class="p">)</span>
 			<span class="k">elif</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please give control to player 2. Player 2, press enter when ready&quot;</span><span class="p">)</span>
-			<span class="k">elif</span><span class="p">(</span><span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">):</span>
+			<span class="k">elif</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Player 1, press enter when ready for your turn&quot;</span><span class="p">)</span>
 			<span class="k">else</span><span class="p">:</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please give control to player 1. Player 1, press enter when ready&quot;</span><span class="p">)</span>
@@ -499,6 +502,9 @@ Executive    </h1>
 	<span class="sd">&quot;&quot;&quot;Keeps track of which player&#39;s turn it is. 0 for player 1, 1 for player 2.&quot;&quot;&quot;</span>
 	<span class="n">roundNum</span> <span class="o">=</span> <span class="mi">0</span>
 	<span class="sd">&quot;&quot;&quot;Keeps track of what round the game is on. Extra, but could be used on transition screen and win screen&quot;&quot;&quot;</span>
+	<span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
+	<span class="sd">&quot;&quot;&quot;Bool variable for whether player is playing against AI.&quot;&quot;&quot;</span>
+	<span class="n">ai</span> <span class="o">=</span> <span class="kc">None</span>
 	
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="sd">&quot;&quot;&quot;Constructor, creates two gameBoard instances&quot;&quot;&quot;</span>
@@ -519,15 +525,16 @@ Executive    </h1>
 			<span class="n">userInput</span> <span class="o">=</span> <span class="n">userInput</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 		
 		<span class="k">if</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span> <span class="ow">or</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span>
-			<span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">True</span>
 		<span class="k">elif</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span> <span class="ow">or</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span>
-			<span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
 		
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-			<span class="k">while</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;E&#39;</span> <span class="ow">and</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;M&#39;</span> <span class="ow">and</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
-				<span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): &quot;</span><span class="p">)</span>
-				<span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-			
+		<span class="n">diff</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+			<span class="k">while</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;E&#39;</span> <span class="ow">and</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;M&#39;</span> <span class="ow">and</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
+				<span class="n">diff</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): &quot;</span><span class="p">)</span>
+				<span class="n">diff</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">ai</span> <span class="o">=</span> <span class="n">AI</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
 		
 		<span class="c1">#Ask how many ships there will be</span>
 		<span class="c1">#This while loop prompts the user for the ship count and repromts until valid input is given.</span>
@@ -541,7 +548,7 @@ Executive    </h1>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid input. Please try again.&quot;</span><span class="p">)</span>
 
 		<span class="c1">#board setup for when not playing AI</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
 			<span class="c1">#Set up each player&#39;s board</span>
 			<span class="n">clear</span><span class="p">()</span>
 			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Setting up Player 1&#39;s Board&quot;</span><span class="p">)</span>
@@ -559,7 +566,7 @@ Executive    </h1>
 			<span class="bp">self</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">boardTwo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numShips</span><span class="p">)</span>
 		
 		<span class="c1">#If using AI, has user setup player 1 board and random ship method sets up player 2 board</span>
-		<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
 			<span class="c1">#Set up each player&#39;s board</span>
 			<span class="n">clear</span><span class="p">()</span>
 			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Setting up Player 1&#39;s Board&quot;</span><span class="p">)</span>
@@ -574,7 +581,7 @@ Executive    </h1>
 
 		<span class="c1">#Small transition between player 2 setup and first turn</span>
 		<span class="n">clear</span><span class="p">()</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">boardTwo</span><span class="o">.</span><span class="n">printPlayerView</span><span class="p">()</span>
 			<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Setup complete. Press enter to start game&quot;</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
@@ -699,7 +706,7 @@ Executive    </h1>
 		<span class="nb">print</span><span class="p">()</span>
 
 		<span class="c1">#Code for if there is an AI</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
 			<span class="c1">#if its the user&#39;s turn</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 				<span class="c1"># Takes column and row input from user</span>
@@ -726,14 +733,7 @@ Executive    </h1>
 			
 			<span class="c1">#AI Gameplay functions if its the AI&#39;s turn</span>
 			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-				<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
-				<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
-					<span class="c1">#place holder so stuff doesnt error</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">mediumFire</span><span class="p">()</span>
-				<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">hardAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
-					
+				<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ai</span><span class="o">.</span><span class="n">takeTurn</span><span class="p">(</span><span class="n">opponentBoard</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>	
 				<span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="o">.</span><span class="n">shotOn</span><span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span> <span class="n">columnTarget</span><span class="p">)</span>
 				<span class="n">row</span> <span class="o">=</span> <span class="n">rowTarget</span><span class="o">+</span><span class="mi">1</span>
 				<span class="n">column</span> <span class="o">=</span> <span class="n">validCol</span><span class="p">[</span><span class="n">columnTarget</span><span class="p">]</span>
@@ -818,11 +818,11 @@ Executive    </h1>
 
 		<span class="c1"># Prompt user to continue</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="n">endGame</span><span class="p">:</span>
-			<span class="k">if</span><span class="p">(</span><span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
+			<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Press enter when ready for AI turn&quot;</span><span class="p">)</span>
 			<span class="k">elif</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please give control to player 2. Player 2, press enter when ready&quot;</span><span class="p">)</span>
-			<span class="k">elif</span><span class="p">(</span><span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">):</span>
+			<span class="k">elif</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Player 1, press enter when ready for your turn&quot;</span><span class="p">)</span>
 			<span class="k">else</span><span class="p">:</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please give control to player 1. Player 1, press enter when ready&quot;</span><span class="p">)</span>
@@ -909,6 +909,26 @@ Executive    </h1>
 
 
                             </div>
+                            <div id="Executive.aiOpp" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Executive.aiOpp">#&nbsp;&nbsp</a>
+
+        <span class="name">aiOpp</span><span class="default_value"> = False</span>
+    </div>
+
+            <div class="docstring"><p>Bool variable for whether player is playing against AI.</p>
+</div>
+
+
+                            </div>
+                            <div id="Executive.ai" class="classattr">
+                                            <div class="attr variable"><a class="headerlink" href="#Executive.ai">#&nbsp;&nbsp</a>
+
+        <span class="name">ai</span><span class="default_value"> = None</span>
+    </div>
+
+    
+
+                            </div>
                             <div id="Executive.runGame" class="classattr">
                                         <div class="attr function"><a class="headerlink" href="#Executive.runGame">#&nbsp;&nbsp</a>
 
@@ -933,15 +953,16 @@ Executive    </h1>
 			<span class="n">userInput</span> <span class="o">=</span> <span class="n">userInput</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
 		
 		<span class="k">if</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;Y&#39;</span> <span class="ow">or</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span>
-			<span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">True</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">True</span>
 		<span class="k">elif</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span> <span class="ow">or</span> <span class="n">userInput</span> <span class="o">==</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span>
-			<span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">=</span> <span class="kc">False</span>
 		
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
-			<span class="k">while</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;E&#39;</span> <span class="ow">and</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;M&#39;</span> <span class="ow">and</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
-				<span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): &quot;</span><span class="p">)</span>
-				<span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-			
+		<span class="n">diff</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+			<span class="k">while</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;E&#39;</span> <span class="ow">and</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;M&#39;</span> <span class="ow">and</span> <span class="n">diff</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
+				<span class="n">diff</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What difficulty would you like to play against, Easy, Medium, or Hard? (E, M, or H): &quot;</span><span class="p">)</span>
+				<span class="n">diff</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">ai</span> <span class="o">=</span> <span class="n">AI</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
 		
 		<span class="c1">#Ask how many ships there will be</span>
 		<span class="c1">#This while loop prompts the user for the ship count and repromts until valid input is given.</span>
@@ -955,7 +976,7 @@ Executive    </h1>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid input. Please try again.&quot;</span><span class="p">)</span>
 
 		<span class="c1">#board setup for when not playing AI</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
 			<span class="c1">#Set up each player&#39;s board</span>
 			<span class="n">clear</span><span class="p">()</span>
 			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Setting up Player 1&#39;s Board&quot;</span><span class="p">)</span>
@@ -973,7 +994,7 @@ Executive    </h1>
 			<span class="bp">self</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">boardTwo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numShips</span><span class="p">)</span>
 		
 		<span class="c1">#If using AI, has user setup player 1 board and random ship method sets up player 2 board</span>
-		<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+		<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
 			<span class="c1">#Set up each player&#39;s board</span>
 			<span class="n">clear</span><span class="p">()</span>
 			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Setting up Player 1&#39;s Board&quot;</span><span class="p">)</span>
@@ -988,7 +1009,7 @@ Executive    </h1>
 
 		<span class="c1">#Small transition between player 2 setup and first turn</span>
 		<span class="n">clear</span><span class="p">()</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">:</span>
 			<span class="bp">self</span><span class="o">.</span><span class="n">boardTwo</span><span class="o">.</span><span class="n">printPlayerView</span><span class="p">()</span>
 			<span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Setup complete. Press enter to start game&quot;</span><span class="p">)</span>
 		<span class="k">else</span><span class="p">:</span>
@@ -1149,7 +1170,7 @@ Takes in a game board and the maximum number of ships.</p>
 		<span class="nb">print</span><span class="p">()</span>
 
 		<span class="c1">#Code for if there is an AI</span>
-		<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
 			<span class="c1">#if its the user&#39;s turn</span>
 			<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 				<span class="c1"># Takes column and row input from user</span>
@@ -1176,14 +1197,7 @@ Takes in a game board and the maximum number of ships.</p>
 			
 			<span class="c1">#AI Gameplay functions if its the AI&#39;s turn</span>
 			<span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-				<span class="k">if</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">easyAI</span><span class="p">()</span>
-				<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span>
-					<span class="c1">#place holder so stuff doesnt error</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">mediumFire</span><span class="p">()</span>
-				<span class="k">elif</span> <span class="n">AI</span><span class="o">.</span><span class="n">aiDiff</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span><span class="p">:</span>
-					<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="n">AI</span><span class="o">.</span><span class="n">hardAI</span><span class="p">(</span><span class="n">opponentBoard</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>
-					
+				<span class="n">columnTarget</span><span class="p">,</span> <span class="n">rowTarget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ai</span><span class="o">.</span><span class="n">takeTurn</span><span class="p">(</span><span class="n">opponentBoard</span><span class="o">.</span><span class="n">board</span><span class="p">)</span>	
 				<span class="n">hitOrMiss</span> <span class="o">=</span> <span class="n">opponentBoard</span><span class="o">.</span><span class="n">shotOn</span><span class="p">(</span><span class="n">rowTarget</span><span class="p">,</span> <span class="n">columnTarget</span><span class="p">)</span>
 				<span class="n">row</span> <span class="o">=</span> <span class="n">rowTarget</span><span class="o">+</span><span class="mi">1</span>
 				<span class="n">column</span> <span class="o">=</span> <span class="n">validCol</span><span class="p">[</span><span class="n">columnTarget</span><span class="p">]</span>
@@ -1286,11 +1300,11 @@ Returns an array containing [row of shot, column of shot, 0-6 miss/ship hit]</p>
 
 		<span class="c1"># Prompt user to continue</span>
 		<span class="k">if</span> <span class="ow">not</span> <span class="n">endGame</span><span class="p">:</span>
-			<span class="k">if</span><span class="p">(</span><span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
+			<span class="k">if</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Press enter when ready for AI turn&quot;</span><span class="p">)</span>
 			<span class="k">elif</span><span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">playerTurn</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please give control to player 2. Player 2, press enter when ready&quot;</span><span class="p">)</span>
-			<span class="k">elif</span><span class="p">(</span><span class="n">AI</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">):</span>
+			<span class="k">elif</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aiOpp</span><span class="p">):</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Player 1, press enter when ready for your turn&quot;</span><span class="p">)</span>
 			<span class="k">else</span><span class="p">:</span>
 				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Please give control to player 1. Player 1, press enter when ready&quot;</span><span class="p">)</span>
