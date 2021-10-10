@@ -154,6 +154,8 @@ class gameBoard:
 		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.
 		"""
 
+		""" Need to show enemy ship positions """
+
 		# scan at middle
 		if(self.board[row][col] == "0"):
 			self.board[row][col] = '*'
@@ -192,7 +194,7 @@ class gameBoard:
 				if (self.board[row+1][col] == "0"):
 					self.board[row+1][col] = '*'
 		# square scan, scanType == 3
-		else:
+		elif scanType == 3:
 			if (row != 0):
 				if (col != 0):
 					if (self.board[row-1][col-1] == "0"):

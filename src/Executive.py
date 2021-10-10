@@ -16,11 +16,15 @@ class Executive:
 	"""Bool variable for whether player is playing against AI."""
 	ai = None
 
-
 	def __init__(self):
 		"""Constructor, creates two gameBoard instances"""
 		self.boardOne = gameBoard()
 		self.boardTwo = gameBoard()
+		"""Keeps track of how many scans each player has. Intially have 3 scans, 1 of each.
+		First element corresponds to X scans, second element corresponds to + scans, third element to block scans (3x3)."""
+		self.player1scan = [1, 1, 1]
+		self.player2scan = [1, 1, 1]
+		self.scanShotName = ["X","Cross","Block"]
 
 	def runGame(self):
 		"""Does setup for game and AI then runs the game logic in a loop until someone wins"""
@@ -127,7 +131,6 @@ class Executive:
 
 		self.winScreen()
 
-
 	def setUp(self, gameBoard, numShips):
 		"""
 		Performs the board setup for one player's board. Will not let players place ships in an invalid spot.
@@ -196,7 +199,7 @@ class Executive:
 		# Initializing variables for input guards
 		validRow = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 		validCol = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
-		validScan = [1, 2, 3]
+		validScan = ["1", "2", "3"]
 		row = 0
 		column = ""
 		scanRow = 0
@@ -205,11 +208,6 @@ class Executive:
 		scanType = 0
 		scanMode = False
 
-		"""Keeps track of how many scans each player has.
-		First element corresponds to X scans, second element corresponds to + scans, third element to block scans (3x3)."""
-		player1scan = [1, 1, 1]
-		player2scan = [1, 1, 1]
-		scanShotName = ["X","Cross","Square"]
 
 		# Prints player's view of current boardstate
 		clear()
@@ -230,36 +228,41 @@ class Executive:
 
 		# Code for if there is an AI
 		if self.aiOpp == True:
-			# if its the user's turn
+			# if its the user's turn, player1
 			if self.playerTurn == 0:
-				# Takes column and row input from user
 
-				# get scanShot option from player
+				# Get scanShot option from player
 				# here only player1 is human so only player1 will get a scan shot
-				if player1scan[0] != 0 or player1scan[1] != 0 or player1scan[2] != 0:
+				if self.player1scan[0] != 0 or self.player1scan[1] != 0 or self.player1scan[2] != 0:
 					while scanOption != "Y" and scanOption != "N" and scanOption != "y" and scanOption != "n":
 						scanOption = input("Would you like to use a scan? (Y or N): ")
-						if scanOption != "y" and scanOption != "n" and scanOption != "Y" and scanOption != "N":
+						if scanOption != "Y" and scanOption != "N" and scanOption != "y" and scanOption != "n":
 							print("Invalid input. Please try again.")
 					# Player selects scan mode
 					if (scanOption == "y" or scanOption == "Y"):
 						# scanMode = True
+						# Print to the player which scans are available
 						print("You have these scans available: [", end = " ")
-						for i in range(len(scanShotName)):
-							if (player1scan[i] == 1):
-								print(scanShotName[i], end = " ")
+						for i in range(len(self.scanShotName)):
+							if (self.player1scan[i] == 1):
+								print(self.scanShotName[i], end = " ")
 						print("]")
 
-						while scanType != "1" and scanType != "2" and scanType != "3":
-							scanType = input("Select which scan you would like to use (X = 1, Cross = 2, Square = 3): ")
-							if scanType != "1" and scanType != "2" and scanType != "3":
+						# Guard against invalid scan input
+						while scanType not in validScan:
+							scanType = input("Select which scan you would like to use (X = 1, Cross = 2, Block = 3): ")
+							if scanType not in validScan:
 								print("Invalid scan input. Please try again.")
+							# Guard against players using the same scan more than once
+							# here scanType is valid but the corresponding scan may not be available
+							elif self.player1scan[int(scanType)-1] != 1:
+								print("Scan unavailable. Please select another one.")
+								scanType = "0" # Needed to loop while condition
 
 						# Print out which shot the player selected
-						print("You selected:",scanShotName[int(scanType)-1])
+						print("You selected:",self.scanShotName[int(scanType)-1])
 						# Show the corresponding scan has been used in player1scan list
-						player1scan[int(scanType)-1] = 0
-						# print(player1scan)
+						self.player1scan[int(scanType)-1] = 0
 
 						print("Choose coordinates to fire scan shot")
 						# Get row and col input for scan shot location
@@ -279,19 +282,19 @@ class Executive:
 
 						scanCol = scanCol.capitalize()
 						int_scanCol = ord(scanCol) - 64
-
 						# Scan shot on enemy board, then print enemy baord
-						opponentBoard.scanShot(scanType, scanRow-1, int_scanCol-1)
+						opponentBoard.scanShot(int(scanType), scanRow-1, int_scanCol-1)
 						print("Scan shot fired!")
-						print("Scanning enemy board...")
+						print("Scanning Enemy's Waters...")
 						opponentBoard.printOpponentView();
 
 					# Player doesn't select scan mode, continue to firing regular shot
 					elif (scanOption == "n" or scanOption == "N"):
 						scanMode = False
 
-
+				# Print this to help distinguisih between scan and regular shot
 				print("Choose coordinates to fire regular shot")
+				# Takes column and row input from user
 				# This while loop prompts the user for the column and row and repromts until valid input is given.
 				while column not in validCol:
 					column = input("Input target column (A-J): ")
