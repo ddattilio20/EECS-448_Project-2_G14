@@ -98,7 +98,7 @@ class Executive:
 		# Small transition between player 2 setup and first turn
 		clear()
 		if self.aiOpp:
-			self.boardTwo.printPlayerView()
+			# self.boardTwo.printPlayerView() # for testing AI placement
 			input("Setup complete. Press enter to start game")
 		else:
 			input("Setup complete. Give control to player 1 and press enter to start game")
