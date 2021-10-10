@@ -247,7 +247,6 @@ class Executive:
 							if (self.player1scan[i] == 1):
 								print(self.scanShotName[i], end = " ")
 						print("]")
-
 						# Guard against invalid scan input
 						while scanType not in validScan:
 							scanType = input("Select which scan you would like to use (X = 1, Cross = 2, Block = 3): ")
@@ -258,12 +257,10 @@ class Executive:
 							elif self.player1scan[int(scanType)-1] != 1:
 								print("Scan unavailable. Please select another one.")
 								scanType = "0" # Needed to loop while condition
-
 						# Print out which shot the player selected
 						print("You selected:",self.scanShotName[int(scanType)-1])
 						# Show the corresponding scan has been used in player1scan list
 						self.player1scan[int(scanType)-1] = 0
-
 						print("Choose coordinates to fire scan shot")
 						# Get row and col input for scan shot location
 						# This while loop prompts the user for the column and row and repromts until valid input is given.
@@ -279,7 +276,6 @@ class Executive:
 								continue
 							if scanRow not in validRow:
 								print("Invalid input. Please try again.")
-
 						scanCol = scanCol.capitalize()
 						int_scanCol = ord(scanCol) - 64
 						# Scan shot on enemy board, then print enemy baord
@@ -287,7 +283,6 @@ class Executive:
 						print("Scan shot fired!")
 						print("Scanning Enemy's Waters...")
 						opponentBoard.printOpponentView();
-
 					# Player doesn't select scan mode, continue to firing regular shot
 					elif (scanOption == "n" or scanOption == "N"):
 						scanMode = False
@@ -325,11 +320,122 @@ class Executive:
 				results = [row, column, hitOrMiss]
 				return(results)
 
-		# Code for if no AI
+		# Code for if no AI, PvP
 		else:
-		# Takes column and row input from user
-		# This while loop prompts the user for the column and row and repromts until valid input is given.
+			# Get scanShot option from player
+			# Check which player is playing, player 1 -> turn = 0, player 2 -> turn = 1
+			# If player 1, use player1scan
+			if self.playerTurn == 0:
+				if self.player1scan[0] != 0 or self.player1scan[1] != 0 or self.player1scan[2] != 0:
+					while scanOption != "Y" and scanOption != "N" and scanOption != "y" and scanOption != "n":
+						scanOption = input("Would you like to use a scan? (Y or N): ")
+						if scanOption != "Y" and scanOption != "N" and scanOption != "y" and scanOption != "n":
+							print("Invalid input. Please try again.")
+					# Player selects scan mode
+					if (scanOption == "y" or scanOption == "Y"):
+						# scanMode = True
+						# Print to the player which scans are available
+						print("You have these scans available: [", end = " ")
+						for i in range(len(self.scanShotName)):
+							if (self.player1scan[i] == 1):
+								print(self.scanShotName[i], end = " ")
+						print("]")
+						# Guard against invalid scan input
+						while scanType not in validScan:
+							scanType = input("Select which scan you would like to use (X = 1, Cross = 2, Block = 3): ")
+							if scanType not in validScan:
+								print("Invalid scan input. Please try again.")
+						# Guard against players using the same scan more than once
+						# here scanType is valid but the corresponding scan may not be available
+							elif self.player1scan[int(scanType)-1] != 1:
+								print("Scan unavailable. Please select another one.")
+								scanType = "0" # Needed to loop while condition
+					# Print out which shot the player selected
+						print("You selected:",self.scanShotName[int(scanType)-1])
+					# Show the corresponding scan has been used in player1scan list
+						self.player1scan[int(scanType)-1] = 0
+						print("Choose coordinates to fire scan shot")
+						# Get row and col input for scan shot location
+						# This while loop prompts the user for the column and row and repromts until valid input is given.
+						while scanCol not in validCol:
+							scanCol = input("Input target column (A-J): ")
+							if scanCol not in validCol:
+								print("Invalid input. Please try again.")
+						while scanRow not in validRow:
+							try:
+								scanRow = int(input("Input target row (1-9): "))
+							except ValueError:
+								print("Invalid input. Please try again.")
+								continue
+							if scanRow not in validRow:
+								print("Invalid input. Please try again.")
+						scanCol = scanCol.capitalize()
+						int_scanCol = ord(scanCol) - 64
+						# Scan shot on enemy board, then print enemy baord
+						# cast scanType to int to match function
+						opponentBoard.scanShot(int(scanType), scanRow-1, int_scanCol-1)
+						print("Scan shot fired!")
+						print("Scanning Enemy's Waters...")
+						opponentBoard.printOpponentView();
 
+			# Player 2's turn, use player2scan
+			elif self.playerTurn == 1:
+				if self.player2scan[0] != 0 or self.player2scan[1] != 0 or self.player2scan[2] != 0:
+					while scanOption != "Y" and scanOption != "N" and scanOption != "y" and scanOption != "n":
+						scanOption = input("Would you like to use a scan? (Y or N): ")
+						if scanOption != "Y" and scanOption != "N" and scanOption != "y" and scanOption != "n":
+							print("Invalid input. Please try again.")
+					# Player selects scan mode
+					if (scanOption == "y" or scanOption == "Y"):
+						# scanMode = True
+						# Print to the player which scans are available
+						print("You have these scans available: [", end = " ")
+						for i in range(len(self.scanShotName)):
+							if (self.player2scan[i] == 1):
+								print(self.scanShotName[i], end = " ")
+						print("]")
+						# Guard against invalid scan input
+						while scanType not in validScan:
+							scanType = input("Select which scan you would like to use (X = 1, Cross = 2, Block = 3): ")
+							if scanType not in validScan:
+								print("Invalid scan input. Please try again.")
+						# Guard against players using the same scan more than once
+						# here scanType is valid but the corresponding scan may not be available
+							elif self.player2scan[int(scanType)-1] != 1:
+								print("Scan unavailable. Please select another one.")
+								scanType = "0" # Needed to loop while condition
+					# Print out which shot the player selected
+						print("You selected:",self.scanShotName[int(scanType)-1])
+					# Show the corresponding scan has been used in player1scan list
+						self.player2scan[int(scanType)-1] = 0
+						print("Choose coordinates to fire scan shot")
+						# Get row and col input for scan shot location
+						# This while loop prompts the user for the column and row and repromts until valid input is given.
+						while scanCol not in validCol:
+							scanCol = input("Input target column (A-J): ")
+							if scanCol not in validCol:
+								print("Invalid input. Please try again.")
+						while scanRow not in validRow:
+							try:
+								scanRow = int(input("Input target row (1-9): "))
+							except ValueError:
+								print("Invalid input. Please try again.")
+								continue
+							if scanRow not in validRow:
+								print("Invalid input. Please try again.")
+						scanCol = scanCol.capitalize()
+						int_scanCol = ord(scanCol) - 64
+						# Scan shot on enemy board, then print enemy baord
+						# cast scanType to int to match function
+						opponentBoard.scanShot(int(scanType), scanRow-1, int_scanCol-1)
+						print("Scan shot fired!")
+						print("Scanning Enemy's Waters...")
+						opponentBoard.printOpponentView();
+
+			# Print this to help distinguisih between scan and regular shot
+			print("Choose coordinates to fire regular shot")
+			# Takes column and row input from user
+			# This while loop prompts the user for the column and row and repromts until valid input is given.
 			while column not in validCol:
 				column = input("Input target column (A-J): ")
 				if column not in validCol:
