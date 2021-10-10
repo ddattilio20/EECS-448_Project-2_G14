@@ -25,7 +25,7 @@ class Executive:
 	def runGame(self):
 		"""Does setup for game and AI then runs the game logic in a loop until someone wins"""
 
-		#variable needed to transfer information from self.takeTurn to self.transition - andrew
+		# variable needed to transfer information from self.takeTurn to self.transition - andrew
 		turnResult = [0, "A", 0]
 		numShipInput = [1, 2, 3, 4, 5, 6]
 		self.numShips = 0
@@ -47,8 +47,8 @@ class Executive:
 				diff = diff.upper()
 			self.ai = AI(diff)
 
-		#Ask how many ships there will be
-		#This while loop prompts the user for the ship count and repromts until valid input is given.
+		# Ask how many ships there will be
+		# This while loop prompts the user for the ship count and repromts until valid input is given.
 		while self.numShips not in numShipInput:
 			try:
 				self.numShips = int(input("How many ships would you like in your BattleShip game? (1-6): "))
@@ -58,9 +58,9 @@ class Executive:
 			if self.numShips not in numShipInput:
 				print("Invalid input. Please try again.")
 
-		#board setup for when not playing AI
+		# board setup for when not playing AI
 		if self.aiOpp == False:
-			#Set up each player's board
+			# Set up each player's board
 			clear()
 			print ("Setting up Player 1's Board")
 			print()
@@ -76,9 +76,9 @@ class Executive:
 			print()
 			self.setUp(self.boardTwo, self.numShips)
 
-		#If using AI, has user setup player 1 board and random ship method sets up player 2 board
+		# If using AI, has user setup player 1 board and random ship method sets up player 2 board
 		elif self.aiOpp == True:
-			#Set up each player's board
+			# Set up each player's board
 			clear()
 			print ("Setting up Player 1's Board")
 			print()
@@ -87,10 +87,10 @@ class Executive:
 			print()
 			self.setUp(self.boardOne, self.numShips)
 			clear()
-			#call random ship placement on self.boardTwo
+			# call random ship placement on self.boardTwo
 			AI.randomPlace(self.boardTwo, self.numShips)
 
-		#Small transition between player 2 setup and first turn
+		# Small transition between player 2 setup and first turn
 		clear()
 		if self.aiOpp:
 			self.boardTwo.printPlayerView()
@@ -100,10 +100,10 @@ class Executive:
 
 		gameOver = False
 		while not(gameOver):
-			#increment roundNum
+			# increment roundNum
 			self.roundNum += 1
 
-			#Each player takes their turn
+			# Each player takes their turn
 			turnResult = self.takeTurn(self.boardOne, self.boardTwo)
 
 			# display transition turn for player one, if player one has won break out of loop
@@ -111,7 +111,7 @@ class Executive:
 				gameOver = True
 				break
 
-			#increment the playerTurn
+			# increment the playerTurn
 			self.playerTurn = (self.playerTurn + 1) % 2
 
 			turnResult = self.takeTurn(self.boardTwo, self.boardOne)
@@ -121,9 +121,9 @@ class Executive:
 				gameOver = True
 				break
 
-			#increment the playerTurn
+			# increment the playerTurn
 			self.playerTurn = (self.playerTurn + 1) % 2
-			#Loop through above logic until someone wins
+			# Loop through above logic until someone wins
 
 		self.winScreen()
 
@@ -138,22 +138,22 @@ class Executive:
 		alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]
 		alphabetInt = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-		gameBoard.printPlayerView()      #initial print to show the board
+		gameBoard.printPlayerView()      # initial print to show the board
 		for i in range(numShips):
-			failChecker = True           #this variable for use in the while loop guarding the usage of placeShip
+			failChecker = True           # this variable for use in the while loop guarding the usage of placeShip
 			while(failChecker == True):
 				x_coordinates = "0"
 				y_coordinates = 0
-				Input_orientation = "0"  #this variable used for taking initial orientation input before converting to a bool
+				Input_orientation = "0"  # this variable used for taking initial orientation input before converting to a bool
 
 				print("Placing the " + ShipNames[i])
 				print("When placing ships, specify the column and row of the topmost or leftmost tile (based on orientation)")
 
 				# take in and convert orientation to a bool
 
-				if (i != 0): #no need to ask for orientation when ship is size 1
+				if (i != 0): # no need to ask for orientation when ship is size 1
 					while Input_orientation != "H" and Input_orientation != "V" and Input_orientation != "h" and Input_orientation != "v":
-						Input_orientation = input("What orientation would you like(H/V)?: ")
+						Input_orientation = input("What orientation would you like (H/V)?: ")
 						if Input_orientation != "H" and Input_orientation != "V" and Input_orientation != "h" and Input_orientation != "v":
 							print("Invalid input. Please try again.")
 					if (Input_orientation =='H' or Input_orientation == 'h'):
@@ -178,12 +178,12 @@ class Executive:
 
 				ShipSize = int(i+1)
 
-				#call placeShip passing in the input values. While loop will run again unless the placement is successful
+				# call placeShip passing in the input values. While loop will run again unless the placement is successful
 				failChecker = gameBoard.placeShip(ShipSize, orientation, y_coordinates, x_coordinates)
 				if failChecker == True:
 					print("Unable to place ship!")
 
-			#print the board so players can see where their ship was placed.
+			# print the board so players can see where their ship was placed.
 			gameBoard.printPlayerView()
 
 		input("Press enter to continue...")
@@ -228,9 +228,9 @@ class Executive:
 		playerBoard.printPlayerView()
 		print()
 
-		#Code for if there is an AI
+		# Code for if there is an AI
 		if self.aiOpp == True:
-			#if its the user's turn
+			# if its the user's turn
 			if self.playerTurn == 0:
 				# Takes column and row input from user
 
@@ -241,6 +241,7 @@ class Executive:
 						scanOption = input("Would you like to use a scan? (Y or N): ")
 						if scanOption != "y" and scanOption != "n" and scanOption != "Y" and scanOption != "N":
 							print("Invalid input. Please try again.")
+					# Player selects scan mode
 					if (scanOption == "y" or scanOption == "Y"):
 						# scanMode = True
 						print("You have these scans available: [", end = " ")
@@ -248,12 +249,21 @@ class Executive:
 							if (player1scan[i] == 1):
 								print(scanShotName[i], end = " ")
 						print("]")
-						scanType = input("Select which scan you would like to use (X = 1, Cross = 2, Square = 3): ")
-						# while scanType not in validScan:
-						# 	print("Invalid scan input. Please try again."
+
+						while scanType != "1" and scanType != "2" and scanType != "3":
+							scanType = input("Select which scan you would like to use (X = 1, Cross = 2, Square = 3): ")
+							if scanType != "1" and scanType != "2" and scanType != "3":
+								print("Invalid scan input. Please try again.")
+
+						# Print out which shot the player selected
 						print("You selected:",scanShotName[int(scanType)-1])
-						print("Choose coordinates to scan shot")
+						# Show the corresponding scan has been used in player1scan list
+						player1scan[int(scanType)-1] = 0
+						# print(player1scan)
+
+						print("Choose coordinates to fire scan shot")
 						# Get row and col input for scan shot location
+						# This while loop prompts the user for the column and row and repromts until valid input is given.
 						while scanCol not in validCol:
 							scanCol = input("Input target column (A-J): ")
 							if scanCol not in validCol:
@@ -270,18 +280,19 @@ class Executive:
 						scanCol = scanCol.capitalize()
 						int_scanCol = ord(scanCol) - 64
 
-						# this should be fired on the enemy board right?
+						# Scan shot on enemy board, then print enemy baord
 						opponentBoard.scanShot(scanType, scanRow-1, int_scanCol-1)
 						print("Scan shot fired!")
 						print("Scanning enemy board...")
 						opponentBoard.printOpponentView();
 
+					# Player doesn't select scan mode, continue to firing regular shot
 					elif (scanOption == "n" or scanOption == "N"):
 						scanMode = False
 
 
 				print("Choose coordinates to fire regular shot")
-				#This while loop prompts the user for the column and row and repromts until valid input is given.
+				# This while loop prompts the user for the column and row and repromts until valid input is given.
 				while column not in validCol:
 					column = input("Input target column (A-J): ")
 					if column not in validCol:
@@ -302,7 +313,7 @@ class Executive:
 				results = [row, column, hitOrMiss]
 				return(results)
 
-			#AI Gameplay functions if its the AI's turn
+			# AI Gameplay functions if its the AI's turn
 			elif self.playerTurn == 1:
 				columnTarget, rowTarget = self.ai.takeTurn(opponentBoard.board)
 				hitOrMiss = opponentBoard.shotOn(rowTarget, columnTarget)
@@ -311,10 +322,10 @@ class Executive:
 				results = [row, column, hitOrMiss]
 				return(results)
 
-		#Code for if no AI
+		# Code for if no AI
 		else:
 		# Takes column and row input from user
-		#This while loop prompts the user for the column and row and repromts until valid input is given.
+		# This while loop prompts the user for the column and row and repromts until valid input is given.
 
 			while column not in validCol:
 				column = input("Input target column (A-J): ")
@@ -349,29 +360,29 @@ class Executive:
 		# This is the return variable, if it is true, then the game ends
 		endGame = False
 
-		#clear screen and display the turn
+		# clear screen and display the turn
 		clear()
 		turnNo = str(self.roundNum)
 		print("Results of round " + turnNo + ": ")
 
-		#display where shot
+		# display where shot
 		row = str(turnResults[0])
 		col = str(turnResults[1])
 		print("Shot on " + col + row + "... ")
-		#check if shot hit
+		# check if shot hit
 		if(turnResults[2] != 0):
 			print("Hit!")
 
-			#print results of shot
+			# print results of shot
 			print("You hit a " + ShipNames[turnResults[2]-1])
 
-			#check if the game has been won
+			# check if the game has been won
 			if(self.boardTwo.gameLost() or self.boardOne.gameLost()):
 				endGame = True
 		else:
 			print("Missed!")
 
-		#display opponentView of board that got hit
+		# display opponentView of board that got hit
 		print()
 		if not self.playerTurn:
 			print("Player 2's Board:")
@@ -408,7 +419,7 @@ class Executive:
 
 	def winScreen(self):
 		"""Displays both boards and announces the winner"""
-		#Clear screen and display which player won and on what turn
+		# Clear screen and display which player won and on what turn
 		clear()
 		round = str(self.roundNum)
 		if self.boardOne.gameLost():
@@ -420,7 +431,7 @@ class Executive:
 		print("[X] = Hit, [*] = Miss, [1-6] = Ship, [~] = Open Waters")
 		print()
 
-		#Display both board states and thank the player
+		# Display both board states and thank the player
 		print("Player One's board:\n")
 		self.boardOne.printPlayerView()
 		print()

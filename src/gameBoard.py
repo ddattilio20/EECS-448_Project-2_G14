@@ -22,14 +22,14 @@ class gameBoard:
 		Takes in ship size, ship orientation (horizontal is 0, vertical is 1),	row index, column index.
 		Returns whether ship placement failed.
 		"""
-		success = False  #this flag used to end while loop without breaking
-		fail = False     #this flag used to break the loop and return a negative result if the input would lead to invalid placement
+		success = False  # this flag used to end while loop without breaking
+		fail = False     # this flag used to break the loop and return a negative result if the input would lead to invalid placement
 		while not success:
-			#vertical
+			# vertical
 			if orientation:
 				if row + size <= 10:
 					for i in range(row, row + size):
-						if self.board[i-1][col-1] != "0": #dry run checking if there are any ships in the way of placement
+						if self.board[i-1][col-1] != "0": # dry run checking if there are any ships in the way of placement
 							fail = True
 
 					if fail:
@@ -37,17 +37,17 @@ class gameBoard:
 
 					for i in range(row, row + size):
 						if self.board[i-1][col-1] == "0":
-							self.board[i-1][col-1] = str(size)  #placing ship
+							self.board[i-1][col-1] = str(size)  # placing ship
 							success = True
 				else:
 					fail = True
 					break
 
-			#horizontal
+			# horizontal
 			elif not orientation:
 				if col + size <= 11:
 					for i in range(col, col + size):
-						if self.board[row-1][i-1] != "0": #dry run checking if there are any ships in the way of placement
+						if self.board[row-1][i-1] != "0": # dry run checking if there are any ships in the way of placement
 							fail = True
 
 					if fail:
@@ -55,7 +55,7 @@ class gameBoard:
 
 					for i in range(col, col + size):
 						if self.board[row-1][i-1] == "0":
-							self.board[row-1][i-1] = str(size)  #placing ship
+							self.board[row-1][i-1] = str(size)  # placing ship
 							success = True
 				else:
 					fail = True
@@ -154,11 +154,11 @@ class gameBoard:
 		Modifies the grid such that an empty tile is marked as a miss (*) and any revealed ship is un-marked and will still need to be fired at.
 		"""
 
-		#scan at middle
+		# scan at middle
 		if(self.board[row][col] == "0"):
 			self.board[row][col] = '*'
 
-		#X scan
+		# X scan
 		if scanType == 1:
 			if (row != 0):
 				if (col != 0):
@@ -177,7 +177,7 @@ class gameBoard:
 					if (self.board[row+1][col+1] == "0"):
 						self.board[row+1][col+1] = '*'
 
-		#+ scan
+		# + scan
 		elif scanType == 2:
 			if (col != 0):
 				if (self.board[row][col-1] == "0"):
@@ -191,7 +191,7 @@ class gameBoard:
 			if (row != 9):
 				if (self.board[row+1][col] == "0"):
 					self.board[row+1][col] = '*'
-		#block scan, scanType == 3
+		# square scan, scanType == 3
 		else:
 			if (row != 0):
 				if (col != 0):
