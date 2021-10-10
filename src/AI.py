@@ -4,7 +4,7 @@ from gameBoard import *
 
 class AI:
     """This class handles all AI-related functionality."""
-	
+
     def __init__(self, diff):
         self.aiDiff = diff
         """User selected AI difficult (Easy, Medium, Hard)."""
@@ -12,8 +12,9 @@ class AI:
         """Stores hit ship coordinates to check nearby coordinates."""
         self.currDir = "L"
         """Stores current direction to check for nearby coordinates."""
-    
+
     def takeTurn(self, opponentBoard):
+        """Calls selected AI difficiulty method based on user input"""
         if self.aiDiff == "E":
             return self.easyAI()
         elif self.aiDiff == "M":
@@ -25,14 +26,14 @@ class AI:
         """Method for easy difficulty AI. Returns random coordinates."""
         # Generates a random number between 0-9 for the column coord
         colTarget = random.randint(0,9)
-       
-        #Generates a random int between 0-87 for the row coord
+
+        # Generates a random int between 0-87 for the row coord
         rowTarget = random.randint(0,8)
-       
+
         # returns the coordinates
         return(colTarget, rowTarget)
 
-        
+
 
     def randomPlace(boardVar, shipNumber):
         """Method for placing ships. Takes in the board being placed on and the number of ships to place."""
@@ -88,7 +89,7 @@ class AI:
                 else:
                     self.currHitShip = [self.currHitShip[0]]
                     self.currDir = "R"
-            
+
             if self.currDir == "R":
                 colTarget = self.currHitShip[-1][0]+1
                 rowTarget = self.currHitShip[-1][1]
@@ -106,7 +107,7 @@ class AI:
                 else:
                     self.currHitShip = [self.currHitShip[0]]
                     self.currDir = "U"
-                    
+
             if self.currDir == "U":
                 colTarget = self.currHitShip[-1][0]
                 rowTarget = self.currHitShip[-1][1]-1
@@ -121,7 +122,7 @@ class AI:
                 else:
                     self.currHitShip = [self.currHitShip[0]]
                     self.currDir = "D"
-                    
+
             if self.currDir == "D":
                 colTarget = self.currHitShip[-1][0]
                 rowTarget = self.currHitShip[-1][1]+1
@@ -136,7 +137,7 @@ class AI:
                 else:
                     self.currHitShip = []
                     self.currDir = "L"
-            
+
     def hardAI(self, board):
         """
         Hard AI method.
@@ -146,4 +147,4 @@ class AI:
         for i in range(9):
             for j in range(10):
                 if (board[i][j] == '1') or (board[i][j]== '2') or (board[i][j] == '3') or (board[i][j] == '4') or (board[i][j] == '5') or (board[i][j] == '6'):
-                    return(j,i)  
+                    return(j,i)

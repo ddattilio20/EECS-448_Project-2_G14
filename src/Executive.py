@@ -2,8 +2,7 @@
 from gameBoard import gameBoard
 from AI import *
 import os
-clear = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
-"""Clears terminal with appropriate OS call"""
+clear = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear') """Clears terminal with appropriate OS call"""
 
 class Executive:
 	"""This class handles the executive/game logic functionality. It is initiated from main"""
@@ -459,10 +458,11 @@ class Executive:
 
 
 	def transitionScreen(self, turnResults):
-
-		# Displays the result of the last shot (hit/miss, which ship was hit/sunk). If a ship was sunk, check if game has been won. If so, end loop and go to winscreen. If not, ask to give control to next player and wait for confirmation.
-		# Takes in an array containing [row of shot, column of shot, 0-6 miss/ship hit].
-		# Returns whether the game has been won.
+		"""
+		Displays the result of the last shot (hit/miss, which ship was hit/sunk). If a ship was sunk, check if game has been won. If so, end loop and go to winscreen. If not, ask to give control to next player and wait for confirmation.
+		Takes in an array containing [row of shot, column of shot, 0-6 miss/ship hit].
+		Returns whether the game has been won.
+		"""
 
 		# Ship names, for easy output
 		ShipNames=["LifeBoat(size=1)", "Destroyer(size=2)", "Submarine(size=3)", "BattleShip(size=4)", "Carrier(size=5)", "Cruiser(size=6)"]
